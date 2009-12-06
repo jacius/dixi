@@ -1,0 +1,14 @@
+<p>Resource: <b>{{resource_name}}</b></p>
+
+{{#has_content}}
+  <p>Content:</p>
+  <pre>{{content}}</pre>
+
+  <a href="{{url_edit}}">Edit resource</a>
+{{/has_content}}
+
+{{#no_content}}
+  <p>This resource does not have any content yet.</p>
+
+  <a href="{{url_edit}}">Create resource</a>
+{{/no_content}}
