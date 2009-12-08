@@ -1,19 +1,21 @@
 #!/bin/env ruby
 
+require 'pathname'
 require 'sinatra/base'
 require 'mustache/sinatra'
-require 'pathname'
-
-require_relative 'src/git'
-require_relative 'src/uri'
-require_relative 'src/helpers'
-require_relative 'src/project'
-
-
 Mustache.raise_on_context_miss = true
 
+$LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
+
+require 'src/uri'
 
 module Dixi
+
+  autoload :Git,      'src/git'
+  autoload :Project,  'src/project'
+  autoload :Version,  'src/version'
+  autoload :Resource, 'src/resource'
+  autoload :Helpers,  'src/helpers'
 
   def self.contents_dir
     Pathname.new(__FILE__).expand_path.dirname.join("contents")

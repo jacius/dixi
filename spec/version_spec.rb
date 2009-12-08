@@ -1,6 +1,9 @@
-require_relative "../src/version"
+require 'pathname'
+$LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.parent.to_s
 
+require "src/version"
 Version = Dixi::Version
+
 
 describe Version do
 

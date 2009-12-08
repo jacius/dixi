@@ -1,6 +1,3 @@
-require_relative 'version'
-require_relative 'resource'
-
 module Dixi
   class Project
 

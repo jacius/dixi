@@ -1,4 +1,7 @@
-require_relative "../src/uri"
+require 'pathname'
+$LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.parent.to_s
+
+require "src/uri"
 
 
 describe URI do
