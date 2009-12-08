@@ -4,6 +4,7 @@ require 'sinatra/base'
 require 'mustache/sinatra'
 require 'pathname'
 
+require_relative 'src/git'
 require_relative 'src/uri'
 require_relative 'src/helpers'
 require_relative 'src/project'
@@ -22,6 +23,15 @@ module Dixi
     URI.parse("/")
   end
 
+  def self.host
+    @host or "unknown"
+  end
+
+  def self.host=(new_host)
+    @host = new_host
+  end
+
+
   class App < Sinatra::Base
     use Rack::MethodOverride
 
@@ -29,6 +39,10 @@ module Dixi
     set :views, 'templates'
     set :mustaches, 'views'
     set :namespace, Dixi
+
+    before do
+      Dixi.host = request.host
+    end
 
     get '/' do
       mustache :index
@@ -48,7 +62,17 @@ module Dixi
     put '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
+
+      is_new = !@resource.has_content?
+
       @resource.save( request.POST["content"], :raw => true )
+
+      if is_new
+        Dixi::Git.commit( "Created #{request.path_info}" )
+      else
+        Dixi::Git.commit( "Edited #{request.path_info}" )
+      end
+
       redirect @resource.url_read
     end
 

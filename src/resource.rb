@@ -38,6 +38,7 @@ module Dixi
       File.open( filepath.to_s, "w+" ) do |f|
         f << contents.to_s
       end
+      Dixi::Git.add( filepath )
     end
 
 
