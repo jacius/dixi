@@ -63,7 +63,7 @@ module Dixi
     end
 
     def url_edit
-      url ";edit"
+      url "?edit"
     end
 
   end

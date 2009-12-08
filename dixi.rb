@@ -34,16 +34,15 @@ module Dixi
       mustache :index
     end
 
-    get '/:project/:version/*;edit' do
-      @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
-      mustache :edit_resource
-    end
-
     get '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
-      return mustache :read_resource
+
+      if params.has_key? "edit"
+        mustache :edit_resource
+      else
+        mustache :read_resource
+      end
     end
 
     put '/:project/:version/*' do
