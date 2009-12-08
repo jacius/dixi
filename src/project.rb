@@ -12,7 +12,7 @@ module Dixi
     attr_reader :name, :version
 
     def filepath
-      Dixi.data_dir.join(@name, @version.to_s)
+      Dixi.contents_dir.join(@name, @version.to_s)
     end
 
     def name

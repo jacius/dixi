@@ -14,8 +14,8 @@ Mustache.raise_on_context_miss = true
 
 module Dixi
 
-  def self.data_dir
-    Pathname.new(__FILE__).expand_path.dirname.join("data")
+  def self.contents_dir
+    Pathname.new(__FILE__).expand_path.dirname.join("contents")
   end
 
   def self.url_base
