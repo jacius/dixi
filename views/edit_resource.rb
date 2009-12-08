@@ -2,7 +2,7 @@ module Dixi
   module Views
 
     class EditResource < Mustache
-      include Dixi::ResourceViewHelpers
+      include Dixi::Helpers::ResourceViews
     end
 
   end

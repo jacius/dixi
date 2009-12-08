@@ -1,41 +1,43 @@
 module Dixi
+  module Helpers
 
-  module ResourceViewHelpers
+    module ResourceViews
 
-    def has_content
-      @resource.has_content?
-    end
+      def has_content
+        @resource.has_content?
+      end
 
-    def no_content
-      !has_content
-    end
+      def no_content
+        !has_content
+      end
 
-    def content
-      @resource.load
-    end
-
-
-    def resource_name
-      @resource.name
-    end
-
-    def file
-      @resource.filepath
-    end
+      def content
+        @resource.load
+      end
 
 
-    def url_edit
-      @resource.url_edit
-    end
+      def resource_name
+        @resource.name
+      end
 
-    def url_read
-      @resource.url_read
-    end
+      def file
+        @resource.filepath
+      end
 
-    def url_submit
-      @resource.url_submit
+
+      def url_edit
+        @resource.url_edit
+      end
+
+      def url_read
+        @resource.url_read
+      end
+
+      def url_submit
+        @resource.url_submit
+      end
+
     end
 
   end
-
 end
