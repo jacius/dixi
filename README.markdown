@@ -4,12 +4,41 @@ Dixi
 Dixi = Docs + Wiki
 ------------------
 
-Dixi is a wiki app specifically designed for maintaining software Ruby
-library documentation collaboratively. It's powered by Ruby, Sinatra
-and Git.
+Dixi is a wiki app specifically designed for maintaining software
+documentation collaboratively. It is powered by Ruby, Sinatra, and
+Git.
 
-Dixi is still in pre-alpha development, so don't expect much at the
-moment. Collaborators are *very* welcome.
+Dixi is still in early development, so don't expect much at the
+moment. If you want to help, please email jacius+dixi at gmail.com
+or send a message to jacius on github.
+
+
+Why should I use Dixi?
+----------------------
+
+* Because automatic doc generators like RDoc can't handle run-time
+  definitions or other metaprogramming techniques used in Ruby.
+
+* Because embedding your main documentation in your source code makes
+  it really inconvenient for anyone else to contribute to the docs.
+
+* Because static docs don't allow users to ask questions, make
+  comments, submit corrections, or provide examples.
+
+* Because regular wikis aren't well-suited for organizing API docs.
+
+
+Who should NOT use Dixi?
+------------------------
+
+* Developers who want to frustrate and alienate their users by
+  providing crappy, useless documentation.
+
+* Developers who think a few scattered comments in the source code of
+  their huge, complex application counts as "technical documentation".
+
+* Developers who love to maintain documentation all by themselves,
+  with no help from anyone else.
 
 
 Install
@@ -17,7 +46,7 @@ Install
 
 You will need:
 
-* Ruby 1.9
+* Ruby 1.8.6+ or JRuby 1.4+
 * Sinatra 0.94
 * Mustache 0.5.0
 * Grit 2.0.0
