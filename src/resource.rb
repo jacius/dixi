@@ -32,18 +32,12 @@ module Dixi
       ""
     end
 
-    def save( contents )
+    def save( contents, options={} )
+      contents = YAML.dump(contents) unless options[:raw]
       File.open( filepath.to_s, "w+" ) do |f|
-        YAML.dump( contents, f )
+        f << contents.to_s
       end
     end
-
-    def save_raw( contents_str )
-      File.open( filepath.to_s, "w+" ) do |f|
-        f << contents_str.to_s
-      end
-    end
-
 
     def name
       @project.name + "/" + @entry

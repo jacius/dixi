@@ -48,7 +48,7 @@ module Dixi
     put '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
-      @resource.save_raw( request.POST["content"] )
+      @resource.save( request.POST["content"], :raw => true )
       redirect @resource.url_read
     end
 
