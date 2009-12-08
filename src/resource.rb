@@ -34,10 +34,12 @@ module Dixi
 
     def save( contents, options={} )
       contents = YAML.dump(contents) unless options[:raw]
+      filepath.dirname.mkpath
       File.open( filepath.to_s, "w+" ) do |f|
         f << contents.to_s
       end
     end
+
 
     def name
       @project.name + "/" + @entry
