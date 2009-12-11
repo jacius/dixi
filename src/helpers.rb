@@ -43,5 +43,80 @@ module Dixi
 
     end
 
+
+
+    module ModuleViews
+      include Dixi::Helpers::ResourceViews
+
+      def resource_type
+        @resource.type
+      end
+
+
+      def has_includes
+        not @resource.includes.empty?
+      end
+
+      def includes
+        @resource.includes
+      end
+
+
+      def has_constants
+        not @resource.constants.empty?
+      end
+
+      def constants
+        @resource.constants
+      end
+
+
+      def has_synopsis
+        not @resource.synopsis.empty?
+      end
+
+      def no_synopsis
+        not has_synopsis
+      end
+
+      def synopsis
+        @resource.synopsis
+      end
+
+
+      def has_details
+        not @resource.details.empty?
+      end
+
+      def no_details
+        not has_details
+      end
+
+      def details
+        @resource.details
+      end
+
+
+      def has_cmethods
+        not @resource.cmethods.empty?
+      end
+
+      def cmethods
+        @resource.cmethods.map { |m| {:name => m} }
+      end
+
+
+      def has_imethods
+        not @resource.imethods.empty?
+      end
+
+      def imethods
+        @resource.imethods.map { |m| {:name => m} }
+      end
+
+    end
+
   end
+
+
 end

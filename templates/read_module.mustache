@@ -1,0 +1,66 @@
+<p>Module: <b>{{resource_name}}</b></p>
+
+{{#no_content}}
+  <p>This module does not have any documentation yet.</p>
+
+  <a href="{{url_edit}}">Create module</a>
+{{/no_content}}
+
+
+{{#has_content}}
+
+  {{#has_includes}}
+    <p>Includes (mixin modules):</p>
+    <ul>
+      {{#includes}}
+        <li>{{name}}</li>
+      {{/includes}}
+    </ul>
+  {{/has_includes}}
+
+
+  {{#has_constants}}
+    <p>Constants:</p>
+    <ul>
+      {{#constants}}
+        <li>{{name}}</li>
+      {{/constants}}
+    </ul>
+  {{/has_constants}}
+
+
+  {{#has_details}}
+    <pre>{{details}}</pre>
+  {{/has_details}}
+
+  {{#no_details}}
+    {{! no details? let's show the synopsis if there is one }}
+    {{#has_synopsis}}
+      <pre>{{synopsis}}</pre>
+    {{/has_synopsis}}
+  {{/no_details}}
+
+
+  {{#has_cmethods}}
+    <p>Module methods:</p>
+    <ul>
+      {{#cmethods}}
+        <li>{{name}}</li>
+      {{/cmethods}}
+    </ul>
+  {{/has_cmethods}}
+
+
+  {{#has_imethods}}
+    <p>Instance methods:</p>
+    <ul>
+      {{#imethods}}
+        <li>{{name}}</li>
+      {{/imethods}}
+    </ul>
+  {{/has_imethods}}
+
+
+  <a href="{{url_edit}}">Edit module</a>
+{{/has_content}}
+
