@@ -5,8 +5,6 @@
 <form method="post" action="{{url_submit}}">
   <input type="hidden" name="_method" value="put" />
   <label for="content">Content:</label><br/>
-  <textarea name="content" cols="80" rows="20">{{content}}</textarea><br/>
+  <textarea name="content" cols="80" rows="20">{{raw_content}}</textarea><br/>
   <input type="submit" value="Save" /> <a href="{{url_read}}">Cancel</a>
 </form>
-
-

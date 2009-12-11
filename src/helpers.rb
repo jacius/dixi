@@ -15,6 +15,10 @@ module Dixi
         @resource.load
       end
 
+      def raw_content
+        @resource.load(:raw => true)
+      end
+
 
       def resource_name
         @resource.name
