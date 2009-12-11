@@ -12,11 +12,11 @@ module Dixi
       end
 
       def content
-        @resource.load
+        @resource.content
       end
 
       def raw_content
-        @resource.load(:raw => true)
+        @resource.raw_content
       end
 
 

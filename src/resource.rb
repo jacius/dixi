@@ -12,6 +12,9 @@ module Dixi
       @project = project
       @entry   = entry
       @parts   = entry.split('/')
+
+      @content     = nil
+      @raw_content = nil
     end
 
     attr_reader :project, :entry
@@ -22,26 +25,39 @@ module Dixi
     end
 
     def has_content?
-      filepath.exist?
+      filepath.exist? or (raw_content and not raw_content.empty?)
+    rescue NoMethodError
+      false
     end
 
 
-    def load( options={} )
-      if options[:raw]
-        filepath.read()
-      else
-        YAML.load_file( filepath.to_s )
-      end
+    def raw_content
+      @raw_content ||= filepath.read()
     rescue Errno::ENOENT
       ""
     end
 
-    def save( contents, options={} )
-      contents = YAML.dump(contents) unless options[:raw]
+    def raw_content=( raw )
+      @raw_content = raw
+    end
+
+    def content
+      @content ||= YAML.load( raw_content )
+    end
+
+
+    def save( options={} )
+      c = if options[:raw]
+            options[:content] || @raw_content
+          else
+            YAML.dump( options[:content] || @content )
+          end
+
       filepath.dirname.mkpath
-      File.open( filepath.to_s, "w+" ) do |f|
-        f << contents.to_s
+      filepath.open( "w+" ) do |f|
+        f << c.to_s
       end
+
       Dixi::Git.add( filepath )
     end
 

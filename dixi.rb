@@ -67,7 +67,8 @@ module Dixi
 
       is_new = !@resource.has_content?
 
-      @resource.save( request.POST["content"], :raw => true )
+      @resource.save( :content => request.POST["content"],
+                      :raw => true )
 
       if is_new
         Dixi::Git.commit( "Created #{request.path_info}" )
