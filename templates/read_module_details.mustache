@@ -1,0 +1,10 @@
+{{#has_details}}
+  <pre>{{details}}</pre>
+{{/has_details}}
+
+{{#no_details}}
+  {{! no details? let's show the synopsis if there is one }}
+  {{#has_synopsis}}
+    <pre>{{synopsis}}</pre>
+  {{/has_synopsis}}
+{{/no_details}}

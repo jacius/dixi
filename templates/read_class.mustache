@@ -13,57 +13,16 @@
     <p>Base class: {{base}}</p>
   {{/has_base}}
 
-  {{#has_includes}}
-    <p>Includes (mixin modules):</p>
-    <ul>
-      {{#includes}}
-        <li>{{name}}</li>
-      {{/includes}}
-    </ul>
-  {{/has_includes}}
+  {{> read_module_includes }}
 
+  {{> read_module_constants }}
 
-  {{#has_constants}}
-    <p>Constants:</p>
-    <ul>
-      {{#constants}}
-        <li>{{name}}</li>
-      {{/constants}}
-    </ul>
-  {{/has_constants}}
+  {{> read_module_details }}
 
+  {{> read_module_cmethods }}
 
-  {{#has_details}}
-    <pre>{{details}}</pre>
-  {{/has_details}}
-
-  {{#no_details}}
-    {{! no details? let's show the synopsis if there is one }}
-    {{#has_synopsis}}
-      <pre>{{synopsis}}</pre>
-    {{/has_synopsis}}
-  {{/no_details}}
-
-
-  {{#has_cmethods}}
-    <p>Class methods:</p>
-    <ul>
-      {{#cmethods}}
-        <li>{{name}}</li>
-      {{/cmethods}}
-    </ul>
-  {{/has_cmethods}}
-
-
-  {{#has_imethods}}
-    <p>Instance methods:</p>
-    <ul>
-      {{#imethods}}
-        <li>{{name}}</li>
-      {{/imethods}}
-    </ul>
-  {{/has_imethods}}
-
+  {{> read_module_imethods }}
 
   <a href="{{url_edit}}">Edit class</a>
+
 {{/has_content}}
