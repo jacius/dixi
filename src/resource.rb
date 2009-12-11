@@ -26,8 +26,12 @@ module Dixi
     end
 
 
-    def load
-      YAML.load_file( filepath.to_s )
+    def load( options={} )
+      if options[:raw]
+        filepath.read()
+      else
+        YAML.load_file( filepath.to_s )
+      end
     rescue Errno::ENOENT
       ""
     end
