@@ -83,6 +83,15 @@ module Dixi
       url "?edit"
     end
 
+
+    def template_read
+      :read_resource
+    end
+
+    def template_edit
+      :edit_resource
+    end
+
   end
 
 end

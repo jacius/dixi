@@ -55,9 +55,9 @@ module Dixi
       @resource = @project.resource( params[:splat][0] )
 
       if params.has_key? "edit"
-        mustache :edit_resource
+        mustache @resource.template_edit
       else
-        mustache :read_resource
+        mustache @resource.template_read
       end
     end
 

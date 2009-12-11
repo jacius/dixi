@@ -35,6 +35,11 @@ module Dixi
       content["details"] || ""
     end
 
+
+    def template_read
+      :read_module
+    end
+
   end
 
 end
