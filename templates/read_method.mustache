@@ -9,6 +9,8 @@
 
 {{#has_content}}
 
+  {{> read_synopsis }}
+
   {{#has_aliases}}
     <p>Aliases:</p>
     <ul>
@@ -17,7 +19,6 @@
       {{/aliases}}
     </ul>
   {{/has_aliases}}
-
 
   {{#has_base}}
     <p>Base method: {{base}}</p>
