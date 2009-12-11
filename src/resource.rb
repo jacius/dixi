@@ -2,6 +2,28 @@ require 'yaml'
 
 module Dixi
   class Resource
+  end
+end
+
+require 'src/module_resource'
+
+module Dixi
+  class Resource
+
+    # Create an appropriate resource instance based on the content
+    # type. E.g. if type is "module", makes a ModuleResource.
+    # If there's no type match, just returns a Resource.
+    # 
+    def self.make( args={} )
+      resource = new( args )
+      case resource.content["type"]
+      when "module"
+        return Dixi::ModuleResource.new( :resource => resource )
+      else
+        return resource
+      end
+    end
+
 
     # Example for URL "/rubygame/2.6.2/api/Rubygame/Surface/blit"
     # 
