@@ -24,6 +24,15 @@ module Dixi
         @resource.name
       end
 
+      def resource_type
+        @resource.type
+      end
+
+      def resource_type_capitalized
+        resource_type.capitalize
+      end
+
+
       def file
         @resource.filepath
       end
