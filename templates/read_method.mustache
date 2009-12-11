@@ -23,42 +23,9 @@
     <p>Base method: {{base}}</p>
   {{/has_base}}
 
+  {{> read_method_args }}
 
-  {{#has_args}}
-    Args: <ol>
-      {{#args}}
-        <li>
-          <ul>
-            <li>Name: {{arg_name}}</li>
-            {{#arg_has_info}}
-              <li>Info: {{arg_info}}</li>
-            {{/arg_has_info}}
-            {{#arg_has_type}}
-              <li>Type: {{arg_type}}</li>
-            {{/arg_has_type}}
-            {{#arg_has_default}}
-              <li>Default: {{arg_default}}</li>
-            {{/arg_has_default}}
-          </ul>
-        </li>
-      {{/args}}
-    </ol>
-  {{/has_args}}
-
-
-  {{#has_details}}
-    Details:
-    <pre>{{details}}</pre>
-  {{/has_details}}
-
-  {{#no_details}}
-    {{! no details? let's show the synopsis if there is one }}
-    {{#has_synopsis}}
-      Synopsis:
-      <pre>{{synopsis}}</pre>
-    {{/has_synopsis}}
-  {{/no_details}}
-
+  {{> read_details }}
 
   <a href="{{url_edit}}">Edit method</a>
 

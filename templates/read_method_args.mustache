@@ -1,0 +1,20 @@
+{{#has_args}}
+  Args: <ol>
+    {{#args}}
+      <li>
+        <ul>
+          <li>Name: {{arg_name}}</li>
+          {{#arg_has_info}}
+            <li>Info: {{arg_info}}</li>
+          {{/arg_has_info}}
+          {{#arg_has_type}}
+            <li>Type: {{arg_type}}</li>
+          {{/arg_has_type}}
+          {{#arg_has_default}}
+            <li>Default: {{arg_default}}</li>
+          {{/arg_has_default}}
+        </ul>
+      </li>
+    {{/args}}
+  </ol>
+{{/has_args}}
