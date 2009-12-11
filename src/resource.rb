@@ -8,13 +8,29 @@ module Dixi
     # project::  Dixi::Project.new("rubygame", "2.6.2")
     # entry::    "api/Rubygame/Surface/blit"
     # 
-    def initialize( project, entry )
-      @project = project
-      @entry   = entry
-      @parts   = entry.split('/')
+    def initialize( args={} )
 
-      @content     = nil
-      @raw_content = nil
+      # Create from another instance. Used for transmuting class.
+      if args[:resource]
+        other        = args[:resource]
+        @project     = other.project
+        @entry       = other.entry
+        @parts       = @entry.split('/')
+        @content     = nil
+        @raw_content = other.raw_content
+
+      # Create from a project and entry
+      else
+        @project     = args[:project]
+        @entry       = args[:entry]
+        @parts       = @entry.split('/')
+        @content     = nil
+        @raw_content = nil
+      end
+
+      if @project.nil? or @entry.nil?
+        raise ArgumentError, "Insufficient resource args: #{args.inspect}"
+      end
     end
 
     attr_reader :project, :entry

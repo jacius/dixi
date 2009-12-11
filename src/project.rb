@@ -18,7 +18,7 @@ module Dixi
 
     # Create a new Resource for this project
     def resource( entry )
-      Dixi::Resource.new( self, entry )
+      Dixi::Resource.new( :project => self, :entry => entry )
     end
 
     def url
