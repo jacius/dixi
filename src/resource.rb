@@ -7,6 +7,7 @@ end
 
 require 'src/module_resource'
 require 'src/class_resource'
+require 'src/method_resource'
 
 module Dixi
   class Resource
@@ -17,10 +18,15 @@ module Dixi
     # 
     def self.make( args={} )
       resource = new( args )
+
+      return resource unless resource.content
+
       case resource.content["type"]
-      when "module"
+      when /method/i
+        return Dixi::MethodResource.new( :resource => resource )
+      when /module/i
         return Dixi::ModuleResource.new( :resource => resource )
-      when "class"
+      when /class/i
         return Dixi::ClassResource.new( :resource => resource )
       else
         return resource

@@ -1,0 +1,65 @@
+<p>{{resource_type_capitalized}}: <b>{{resource_name}}</b></p>
+
+{{#no_content}}
+  <p>This method does not have any documentation yet.</p>
+
+  <a href="{{url_edit}}">Create method</a>
+{{/no_content}}
+
+
+{{#has_content}}
+
+  {{#has_aliases}}
+    <p>Aliases:</p>
+    <ul>
+      {{#aliases}}
+        <li>{{alias_name}}</li>
+      {{/aliases}}
+    </ul>
+  {{/has_aliases}}
+
+
+  {{#has_base}}
+    <p>Base method: {{base}}</p>
+  {{/has_base}}
+
+
+  {{#has_args}}
+    Args: <ol>
+      {{#args}}
+        <li>
+          <ul>
+            <li>Name: {{arg_name}}</li>
+            {{#arg_has_info}}
+              <li>Info: {{arg_info}}</li>
+            {{/arg_has_info}}
+            {{#arg_has_type}}
+              <li>Type: {{arg_type}}</li>
+            {{/arg_has_type}}
+            {{#arg_has_default}}
+              <li>Default: {{arg_default}}</li>
+            {{/arg_has_default}}
+          </ul>
+        </li>
+      {{/args}}
+    </ol>
+  {{/has_args}}
+
+
+  {{#has_details}}
+    Details:
+    <pre>{{details}}</pre>
+  {{/has_details}}
+
+  {{#no_details}}
+    {{! no details? let's show the synopsis if there is one }}
+    {{#has_synopsis}}
+      Synopsis:
+      <pre>{{synopsis}}</pre>
+    {{/has_synopsis}}
+  {{/no_details}}
+
+
+  <a href="{{url_edit}}">Edit method</a>
+
+{{/has_content}}
