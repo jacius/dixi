@@ -116,6 +116,21 @@ module Dixi
 
     end
 
+
+
+    module ClassViews
+      include Dixi::Helpers::ModuleViews
+
+      def has_base
+        not @resource.base.nil?
+      end
+
+      def base
+        @resource.base
+      end
+
+    end
+
   end
 
 
