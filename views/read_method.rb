@@ -30,7 +30,7 @@ module Dixi
       def args
         @resource.args.collect { |a|
           { :arg_name        => a["name"],
-            :arg_info        => a["info"],
+            :arg_info        => kramdown( a["info"] ),
             :arg_has_info    => a.has_key?("info"),
             :arg_type        => a["type"],
             :arg_has_type    => a.has_key?("type"),
