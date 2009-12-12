@@ -90,6 +90,8 @@ module Dixi
 
     def content
       @content ||= YAML.load( raw_content )
+    rescue
+      {}
     end
 
 
