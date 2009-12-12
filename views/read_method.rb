@@ -28,16 +28,7 @@ module Dixi
 
 
       def args
-        @resource.args.collect { |a|
-          { :arg_name        => a["name"],
-            :arg_info        => kramdown( a["info"] ),
-            :arg_has_info    => a.has_key?("info"),
-            :arg_type        => a["type"],
-            :arg_has_type    => a.has_key?("type"),
-            :arg_default     => a["default"],
-            :arg_has_default => a.has_key?("default"),
-          }
-        }
+        @resource.args.collect { |arg| arg.mustache_hash }
       end
 
       def has_args

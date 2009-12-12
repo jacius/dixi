@@ -1,3 +1,4 @@
+require 'src/method_arg'
 
 module Dixi
 
@@ -16,7 +17,9 @@ module Dixi
     end
 
     def args
-      content["args"] || []
+      @args ||= (content["args"] or []).collect{ |arg|
+        Dixi::MethodArg.new(self, arg)
+      }
     end
 
     def aliases
