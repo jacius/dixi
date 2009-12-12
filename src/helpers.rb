@@ -50,6 +50,11 @@ module Dixi
         @resource.url_submit
       end
 
+
+      def kramdown( str )
+        Kramdown::Document.new( str ).to_html
+      end
+
     end
 
 
@@ -89,7 +94,7 @@ module Dixi
       end
 
       def synopsis
-        @resource.synopsis
+        kramdown @resource.synopsis
       end
 
 
@@ -102,7 +107,7 @@ module Dixi
       end
 
       def details
-        @resource.details
+        kramdown @resource.details
       end
 
 

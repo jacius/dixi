@@ -5,6 +5,8 @@ require 'sinatra/base'
 require 'mustache/sinatra'
 Mustache.raise_on_context_miss = true
 
+autoload :Kramdown, 'kramdown'
+
 $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
 require 'src/uri'

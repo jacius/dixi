@@ -70,7 +70,7 @@ module Dixi
 
 
       def details
-        @resource.details
+        kramdown @resource.details
       end
 
       def has_details

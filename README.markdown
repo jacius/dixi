@@ -50,11 +50,12 @@ You will need:
 * Sinatra 0.94
 * Mustache 0.5.0
 * Grit 2.0.0
+* Kramdown 0.2.0
 * Shotgun 0.4 (optional, for development mode)
 
 So...
 
-    gem install sinatra mustache grit shotgun
+    gem install sinatra mustache grit kramdown shotgun
 
 There is nothing to install for Dixi itself. Just run it.
 
