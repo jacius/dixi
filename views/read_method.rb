@@ -23,15 +23,15 @@ module Dixi
 
 
       def is_class_method
-        resource_type =~ /class method/i
+        type =~ /class method/i
       end
 
       def is_module_method
-        resource_type =~ /module method/i
+        type =~ /module method/i
       end
 
       def is_instance_method
-        resource_type =~ /instance method/i
+        type =~ /instance method/i
       end
 
 

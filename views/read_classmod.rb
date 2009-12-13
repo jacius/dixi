@@ -23,11 +23,11 @@ module Dixi
 
 
       def is_module
-        resource_type =~ /module/i
+        type =~ /module/i
       end
 
       def is_class
-        resource_type =~ /class/i
+        type =~ /class/i
       end
 
 

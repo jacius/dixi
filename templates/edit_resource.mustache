@@ -1,6 +1,6 @@
 {{#has_content}} <p>Editing resource:      {{/has_content}}
 {{#no_content}}  <p>Creating new resource: {{/no_content}}
-  <b>{{resource_name}}</b></p>
+  <b>{{name}}</b></p>
 
 <form method="post" action="{{url_submit}}">
   <input type="hidden" name="_method" value="put" />

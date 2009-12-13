@@ -37,16 +37,16 @@ module Dixi
       end
 
 
-      def resource_name
+      def name
         @resource.name
       end
 
-      def resource_type
+      def type
         @resource.type
       end
 
-      def resource_type_capitalized
-        resource_type.capitalize
+      def type_capitalized
+        type.capitalize
       end
 
 
