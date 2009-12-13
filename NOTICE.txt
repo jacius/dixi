@@ -1,0 +1,10 @@
+
+ Dixi is licensed under the Apache License, Version 2.0.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+
+ Dixi is the product of development by the following individuals:
+
+  * John Croisant is Dixi's creator, steward, and lead developer.

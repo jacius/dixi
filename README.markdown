@@ -81,10 +81,13 @@ For production mode... there is no production mode yet.
 License
 -------
 
-I haven't decided yet. So, all rights reserved, for now.
+Copyright 2009 John Croisant
+
+Dixi is licensed under the Apache License, Version 2.0.
+See LICENSE.txt and NOTICE.txt for details.
 
 
 Author
 ------
 
-John Croisant  <jacius@gmail.com>
+John Croisant  <jacius+dixi@gmail.com>
