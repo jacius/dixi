@@ -15,14 +15,10 @@
     <p>Base {{resource_type}}: {{base}}</p>
   {{/has_base}}
 
-  {{> read_module_includes }}
-
-  {{> read_module_constants }}
-
-  {{> read_module_cmethods }}
-
-  {{> read_module_imethods }}
-
+  {{> read_includes }}
+  {{> read_constants }}
+  {{> read_cmethods }}
+  {{> read_imethods }}
   {{> read_details }}
 
   <a href="{{url_edit}}">Edit {{resource_type}}</a>

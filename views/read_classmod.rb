@@ -18,7 +18,7 @@
 module Dixi
   module Views
 
-    class ReadModule < Mustache
+    class ReadClassmod < Mustache
       include Dixi::Helpers::ResourceViews
 
 

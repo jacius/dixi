@@ -22,7 +22,7 @@ module Dixi
   end
 end
 
-require 'src/module_resource'
+require 'src/classmod_resource'
 require 'src/method_resource'
 
 module Dixi
@@ -41,7 +41,7 @@ module Dixi
       when /method/i
         return Dixi::MethodResource.new( :resource => resource )
       when /class|module/i
-        return Dixi::ModuleResource.new( :resource => resource )
+        return Dixi::ClassmodResource.new( :resource => resource )
       else
         return resource
       end

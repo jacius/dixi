@@ -17,11 +17,11 @@
 
 module Dixi
 
-  # Resource for Modules and Classes.
-  class ModuleResource < Dixi::Resource
+  # Resource for Classes and Modules.
+  class ClassmodResource < Dixi::Resource
 
     def type
-      content["type"] || "module"
+      content["type"] || "class/module"
     end
 
     def name
@@ -58,7 +58,7 @@ module Dixi
 
 
     def template_read
-      :read_module
+      :read_classmod
     end
 
   end
