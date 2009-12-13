@@ -65,6 +65,10 @@ module Dixi
         kramdown @resource.synopsis
       end
 
+      def raw_synopsis
+        @resource.synopsis
+      end
+
 
       def has_details
         not @resource.details.empty?
@@ -76,6 +80,10 @@ module Dixi
 
       def details
         kramdown @resource.details
+      end
+
+      def raw_details
+        @resource.details
       end
 
 
