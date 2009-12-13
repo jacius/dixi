@@ -36,7 +36,9 @@ module Dixi
       end
 
       def includes
-        @resource.includes
+        @resource.includes.to_enum(:each_with_index).map { |inc,index|
+          { :name => inc, :index => index }
+        }
       end
 
 
@@ -45,7 +47,9 @@ module Dixi
       end
 
       def constants
-        @resource.constants
+        @resource.constants.to_enum(:each_with_index).map { |const,index|
+          { :name => const, :index => index }
+        }
       end
 
 
@@ -80,7 +84,9 @@ module Dixi
       end
 
       def cmethods
-        @resource.cmethods.map { |m| {:name => m} }
+        @resource.cmethods.to_enum(:each_with_index).map { |m,index|
+          { :name => m, :index => index }
+        }
       end
 
 
@@ -89,7 +95,9 @@ module Dixi
       end
 
       def imethods
-        @resource.imethods.map { |m| {:name => m} }
+        @resource.imethods.to_enum(:each_with_index).map { |m,index|
+          { :name => m, :index => index }
+        }
       end
 
 
