@@ -9,18 +9,63 @@
 
 {{#has_content}}
 
-  {{> read_synopsis }}
+  {{#has_synopsis}}
+    <h2>Synopsis</h2>
+    {{{synopsis}}}
+  {{/has_synopsis}}
+
 
   {{#has_base}}
     <h2>Base {{resource_type}}</h2>
     {{base}}
   {{/has_base}}
 
-  {{> read_includes }}
-  {{> read_constants }}
-  {{> read_cmethods }}
-  {{> read_imethods }}
-  {{> read_details }}
+
+  {{#has_includes}}
+    <h2>Includes (mixin modules)</h2>
+    <ul>
+      {{#includes}}
+        <li>{{name}}</li>
+      {{/includes}}
+    </ul>
+  {{/has_includes}}
+
+
+  {{#has_constants}}
+    <h2>Constants:</h2>
+    <ul>
+      {{#constants}}
+        <li>{{name}}</li>
+      {{/constants}}
+    </ul>
+  {{/has_constants}}
+
+
+  {{#has_cmethods}}
+    <h2>Class methods</h2>
+    <ul>
+      {{#cmethods}}
+        <li>{{name}}</li>
+      {{/cmethods}}
+    </ul>
+  {{/has_cmethods}}
+
+
+  {{#has_imethods}}
+    <h2>Instance methods</h2>
+    <ul>
+      {{#imethods}}
+        <li>{{name}}</li>
+      {{/imethods}}
+    </ul>
+  {{/has_imethods}}
+
+
+  {{#has_details}}
+    <h2>Details</h2>
+    {{{details}}}
+  {{/has_details}}
+
 
   <a href="{{url_edit}}">Edit {{resource_type}}</a>
 

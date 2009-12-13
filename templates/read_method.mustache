@@ -9,7 +9,11 @@
 
 {{#has_content}}
 
-  {{> read_synopsis }}
+  {{#has_synopsis}}
+    <h2>Synopsis</h2>
+    {{{synopsis}}}
+  {{/has_synopsis}}
+
 
   {{#has_aliases}}
     <h2>Aliases</h2>
@@ -20,13 +24,40 @@
     </ul>
   {{/has_aliases}}
 
+
   {{#has_base}}
     <h2>Base method</h2>
     {{base}}
   {{/has_base}}
 
-  {{> read_method_args }}
-  {{> read_details }}
+
+  {{#has_args}}
+    <h2>Args</h2>
+    <ol>
+      {{#args}}
+        <li>
+          <h3>{{arg_name}}
+            {{#arg_has_default}}
+              = {{arg_default}}
+            {{/arg_has_default}}
+          </h3>
+          {{#arg_has_info}}
+            {{{arg_info}}}
+          {{/arg_has_info}}
+          {{#arg_has_type}}
+            <p>Type: {{arg_type}}</p>
+          {{/arg_has_type}}
+        </li>
+      {{/args}}
+    </ol>
+  {{/has_args}}
+
+
+  {{#has_details}}
+    <h2>Details</h2>
+    {{{details}}}
+  {{/has_details}}
+
 
   <a href="{{url_edit}}">Edit {{resource_type}}</a>
 
