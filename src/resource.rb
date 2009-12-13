@@ -23,7 +23,6 @@ module Dixi
 end
 
 require 'src/module_resource'
-require 'src/class_resource'
 require 'src/method_resource'
 
 module Dixi
@@ -41,10 +40,8 @@ module Dixi
       case resource.content["type"]
       when /method/i
         return Dixi::MethodResource.new( :resource => resource )
-      when /module/i
+      when /class|module/i
         return Dixi::ModuleResource.new( :resource => resource )
-      when /class/i
-        return Dixi::ClassResource.new( :resource => resource )
       else
         return resource
       end

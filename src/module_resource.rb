@@ -17,14 +17,19 @@
 
 module Dixi
 
+  # Resource for Modules and Classes.
   class ModuleResource < Dixi::Resource
 
     def type
-      "module"
+      content["type"] || "module"
     end
 
     def name
       content["name"] || ""
+    end
+
+    def base
+      content["base"] || nil
     end
 
     def includes

@@ -1,9 +1,9 @@
-<p>Module: <b>{{resource_name}}</b></p>
+<p>{{resource_type_capitalized}}: <b>{{resource_name}}</b></p>
 
 {{#no_content}}
-  <p>This module does not have any documentation yet.</p>
+  <p>This {{resource_type}} does not have any documentation yet.</p>
 
-  <a href="{{url_edit}}">Create module</a>
+  <a href="{{url_edit}}">Create {{resource_type}}</a>
 {{/no_content}}
 
 
@@ -11,16 +11,20 @@
 
   {{> read_synopsis }}
 
+  {{#has_base}}
+    <p>Base {{resource_type}}: {{base}}</p>
+  {{/has_base}}
+
   {{> read_module_includes }}
 
   {{> read_module_constants }}
-
-  {{> read_details }}
 
   {{> read_module_cmethods }}
 
   {{> read_module_imethods }}
 
-  <a href="{{url_edit}}">Edit module</a>
+  {{> read_details }}
+
+  <a href="{{url_edit}}">Edit {{resource_type}}</a>
 
 {{/has_content}}
