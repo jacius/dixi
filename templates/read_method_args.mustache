@@ -1,19 +1,19 @@
 {{#has_args}}
-  Args: <ol>
+  <h2>Args</h2>
+  <ol>
     {{#args}}
       <li>
-        <ul>
-          <li>Name: {{arg_name}}</li>
-          {{#arg_has_info}}
-            <li>Info: {{{arg_info}}}</li>
-          {{/arg_has_info}}
-          {{#arg_has_type}}
-            <li>Type: {{arg_type}}</li>
-          {{/arg_has_type}}
+        <h3>{{arg_name}}
           {{#arg_has_default}}
-            <li>Default: {{arg_default}}</li>
+            = {{arg_default}}
           {{/arg_has_default}}
-        </ul>
+        </h3>
+        {{#arg_has_info}}
+          {{{arg_info}}}
+        {{/arg_has_info}}
+        {{#arg_has_type}}
+          <p>Type: {{arg_type}}</p>
+        {{/arg_has_type}}
       </li>
     {{/args}}
   </ol>

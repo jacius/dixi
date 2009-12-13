@@ -1,4 +1,4 @@
-<p>{{resource_type_capitalized}}: <b>{{resource_name}}</b></p>
+<h1>{{resource_type_capitalized}} {{resource_name}}</h1>
 
 {{#no_content}}
   <p>This {{resource_type}} does not have any documentation yet.</p>
@@ -12,7 +12,8 @@
   {{> read_synopsis }}
 
   {{#has_base}}
-    <p>Base {{resource_type}}: {{base}}</p>
+    <h2>Base {{resource_type}}</h2>
+    {{base}}
   {{/has_base}}
 
   {{> read_includes }}

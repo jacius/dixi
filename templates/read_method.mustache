@@ -1,9 +1,9 @@
-<p>{{resource_type_capitalized}}: <b>{{resource_name}}</b></p>
+<h1>{{resource_type_capitalized}} {{resource_name}}</h1>
 
 {{#no_content}}
-  <p>This method does not have any documentation yet.</p>
+  <p>This {{resource_type}} does not have any documentation yet.</p>
 
-  <a href="{{url_edit}}">Create method</a>
+  <a href="{{url_edit}}">Create {{resource_type}}</a>
 {{/no_content}}
 
 
@@ -12,7 +12,7 @@
   {{> read_synopsis }}
 
   {{#has_aliases}}
-    <p>Aliases:</p>
+    <h2>Aliases</h2>
     <ul>
       {{#aliases}}
         <li>{{alias_name}}</li>
@@ -21,13 +21,13 @@
   {{/has_aliases}}
 
   {{#has_base}}
-    <p>Base method: {{base}}</p>
+    <h2>Base method</h2>
+    {{base}}
   {{/has_base}}
 
   {{> read_method_args }}
-
   {{> read_details }}
 
-  <a href="{{url_edit}}">Edit method</a>
+  <a href="{{url_edit}}">Edit {{resource_type}}</a>
 
 {{/has_content}}
