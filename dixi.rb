@@ -89,6 +89,10 @@ module Dixi
       if params.has_key? "edit"
         mustache @resource.template_edit
       else
+        if not @resource.has_content?
+          headers( "Cache-Control" => "private" )
+          status 404
+        end
         mustache @resource.template_read
       end
     end
