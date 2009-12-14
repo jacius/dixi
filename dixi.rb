@@ -22,6 +22,7 @@ require 'mustache/sinatra'
 Mustache.raise_on_context_miss = true
 
 autoload :Kramdown, 'kramdown'
+autoload :Grit, 'grit'
 
 $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
@@ -29,7 +30,6 @@ require 'src/uri'
 
 module Dixi
 
-  autoload :Git,      'src/git'
   autoload :Project,  'src/project'
   autoload :Version,  'src/version'
   autoload :Resource, 'src/resource'
@@ -89,9 +89,9 @@ module Dixi
                       :raw => true )
 
       if is_new
-        Dixi::Git.commit( "Created #{request.path_info}" )
+        @project.git_commit( "Created #{request.path_info}" )
       else
-        Dixi::Git.commit( "Edited #{request.path_info}" )
+        @project.git_commit( "Edited #{request.path_info}" )
       end
 
       redirect @resource.url_read

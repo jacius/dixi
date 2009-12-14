@@ -82,11 +82,11 @@ module Dixi
 
 
     def filepath
-      Pathname.new(@project.filepath.join(*@parts).to_s + ".yaml")
+      Pathname.new(@project.version_dir.join(*@parts).to_s + ".yaml")
     end
 
     def has_content?
-      filepath.exist? or (raw_content and not raw_content.empty?)
+      filepath.exist? or (not raw_content.empty?)
     rescue NoMethodError
       false
     end
@@ -121,12 +121,12 @@ module Dixi
         f << c.to_s
       end
 
-      Dixi::Git.add( filepath )
+      @project.git_add( filepath )
     end
 
 
     def name
-      @project.name + "/" + @entry
+      @project.name_and_version + "/" + @entry
     end
 
 
