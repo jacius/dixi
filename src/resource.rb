@@ -108,6 +108,10 @@ module Dixi
       {}
     end
 
+    def content_as_yaml
+      raw_content
+    end
+
 
     def save( options={} )
       c = if options[:raw]

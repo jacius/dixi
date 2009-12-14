@@ -68,6 +68,20 @@ module Dixi
       mustache :index
     end
 
+    get '/:project/:version/*.yaml' do
+      @project = Project.new( params[:project], params[:version] )
+      @resource = @project.resource( params[:splat][0] )
+
+      content_type '.yaml', :charset => 'utf-8'
+
+      if @resource.has_content?
+        @resource.content_as_yaml
+      else
+        headers( "Cache-Control" => "private" )
+        error 404
+      end
+    end
+
     get '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
