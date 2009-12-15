@@ -60,13 +60,16 @@ module Dixi
     set :mustaches, 'views'
     set :namespace, Dixi
 
+
     before do
       Dixi.host = request.host
     end
 
+
     get '/' do
       mustache :index
     end
+
 
     get '/:project/:version/*.yaml' do
       @project = Project.new( params[:project], params[:version] )
@@ -81,6 +84,7 @@ module Dixi
         error 404
       end
     end
+
 
     get '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
@@ -97,10 +101,35 @@ module Dixi
       end
     end
 
+
+    put '/:project/:version/*.yaml' do
+      @project = Project.new( params[:project], params[:version] )
+      @resource = @project.resource( params[:splat][0] )
+      is_new = !@resource.has_content?
+
+      @resource.save( :content => request.body.read, :raw => true )
+
+      if is_new
+        @project.git_commit( "Created #{request.path_info} as YAML" )
+      else
+        @project.git_commit( "Edited #{request.path_info} as YAML" )
+      end
+
+      headers["Location"] = @resource.url_read_yaml
+      headers["Cache-Control"] = "private"
+      content_type '.yaml', :charset => 'utf-8'
+      status 201
+
+      YAML.dump("message" => "Resource " + (is_new ? "created." : "updated."),
+                "uri" => {
+                  "yaml" => @resource.url_read_yaml,
+                  "html" => @resource.url_read })
+    end
+
+
     put '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
-
       is_new = !@resource.has_content?
 
       @resource.save( :content => request.POST["content"],

@@ -142,6 +142,10 @@ module Dixi
       url
     end
 
+    def url_read_yaml
+      url(".yaml")
+    end
+
     def url_submit
       url
     end
