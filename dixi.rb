@@ -19,7 +19,6 @@
 require 'pathname'
 require 'sinatra/base'
 require 'mustache/sinatra'
-Mustache.raise_on_context_miss = true
 
 autoload :Kramdown, 'kramdown'
 autoload :Grit, 'grit'
@@ -27,6 +26,7 @@ autoload :Grit, 'grit'
 $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
 require 'src/uri'
+
 
 module Dixi
 

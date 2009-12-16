@@ -1,7 +1,7 @@
 
 # Development mode
 task :shotgun do
-  sh( "shotgun -p 4567 config.ru"  )
+  sh( "shotgun --port 4567 --env development config.ru"  )
 end
 
 
