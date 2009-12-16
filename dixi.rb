@@ -35,6 +35,7 @@ module Dixi
   autoload :Resource, 'src/resource'
   autoload :Helpers,  'src/helpers'
 
+
   def self.contents_dir
     Pathname.new(__FILE__).expand_path.dirname.join("contents")
   end
@@ -59,90 +60,9 @@ module Dixi
     set :views, 'templates'
     set :mustaches, 'views'
     set :namespace, Dixi
-
-
-    before do
-      Dixi.host = request.host
-    end
-
-
-    get '/' do
-      mustache :index
-    end
-
-
-    get '/:project/:version/*.yaml' do
-      @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
-
-      content_type '.yaml', :charset => 'utf-8'
-
-      if @resource.has_content?
-        @resource.content_as_yaml
-      else
-        headers( "Cache-Control" => "private" )
-        error 404
-      end
-    end
-
-
-    get '/:project/:version/*' do
-      @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
-
-      if params.has_key? "edit"
-        mustache @resource.template_edit
-      else
-        if not @resource.has_content?
-          headers( "Cache-Control" => "private" )
-          status 404
-        end
-        mustache @resource.template_read
-      end
-    end
-
-
-    put '/:project/:version/*.yaml' do
-      @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
-      is_new = !@resource.has_content?
-
-      @resource.save( :content => request.body.read, :raw => true )
-
-      if is_new
-        @project.git_commit( "Created #{request.path_info} as YAML" )
-      else
-        @project.git_commit( "Edited #{request.path_info} as YAML" )
-      end
-
-      headers["Location"] = @resource.url_read_yaml
-      headers["Cache-Control"] = "private"
-      content_type '.yaml', :charset => 'utf-8'
-      status 201
-
-      YAML.dump("message" => "Resource " + (is_new ? "created." : "updated."),
-                "uri" => {
-                  "yaml" => @resource.url_read_yaml,
-                  "html" => @resource.url_read })
-    end
-
-
-    put '/:project/:version/*' do
-      @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
-      is_new = !@resource.has_content?
-
-      @resource.save( :content => request.POST["content"],
-                      :raw => true )
-
-      if is_new
-        @project.git_commit( "Created #{request.path_info}" )
-      else
-        @project.git_commit( "Edited #{request.path_info}" )
-      end
-
-      redirect @resource.url_read
-    end
-
   end
+
+
+  require 'src/routes'
+
 end
