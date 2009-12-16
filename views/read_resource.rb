@@ -15,11 +15,12 @@
 #  
 
 
+require 'views/resource_view.rb'
+
 module Dixi
   module Views
 
-    class ReadResource < Mustache
-      include Dixi::Helpers::ResourceViews
+    class ReadResource < ResourceView
     end
 
   end

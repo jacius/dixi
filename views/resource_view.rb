@@ -16,9 +16,10 @@
 
 
 module Dixi
-  module Helpers
+  module Views
 
-    module ResourceViews
+    # Base class for all Resource views.
+    class ResourceView < Mustache
 
       def has_content
         @resource.has_content?

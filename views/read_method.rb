@@ -15,12 +15,12 @@
 #  
 
 
+require 'views/resource_view.rb'
+
 module Dixi
   module Views
 
-    class ReadMethod < Mustache
-      include Dixi::Helpers::ResourceViews
-
+    class ReadMethod < ResourceView
 
       def is_class_method
         type =~ /class method/i
