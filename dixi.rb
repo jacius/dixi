@@ -20,9 +20,6 @@ require 'pathname'
 require 'sinatra/base'
 require 'mustache/sinatra'
 
-autoload :Kramdown, 'kramdown'
-autoload :Grit, 'grit'
-
 $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
 require 'src/uri'

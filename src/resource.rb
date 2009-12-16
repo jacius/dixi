@@ -15,8 +15,6 @@
 #  
 
 
-require 'yaml'
-
 module Dixi
   class Resource
   end
@@ -103,6 +101,7 @@ module Dixi
     end
 
     def content
+      require 'yaml'
       @content ||= YAML.load( raw_content )
     rescue
       {}
@@ -117,6 +116,7 @@ module Dixi
       c = if options[:raw]
             options[:content] || @raw_content
           else
+            require 'yaml'
             YAML.dump( options[:content] || @content )
           end
 

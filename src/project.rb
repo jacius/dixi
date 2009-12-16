@@ -80,6 +80,7 @@ module Dixi
     # repository on disk if it doesn't already exist.
     # 
     def git_repo
+      require 'grit'
       @repo ||= Grit::Repo.new( dir.to_s )
     rescue Grit::InvalidGitRepositoryError
       new_git_repo

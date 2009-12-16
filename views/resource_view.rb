@@ -70,6 +70,7 @@ module Dixi
 
 
       def kramdown( str )
+        require 'kramdown'
         Kramdown::Document.new( str ).to_html
       end
 
