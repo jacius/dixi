@@ -31,10 +31,15 @@ module Dixi
   autoload :Version,  'src/version'
   autoload :Resource, 'src/resource'
   autoload :Helpers,  'src/helpers'
+  autoload :Log,      'src/log'
 
+
+  def self.main_dir
+    Pathname.new(__FILE__).expand_path.dirname
+  end
 
   def self.contents_dir
-    Pathname.new(__FILE__).expand_path.dirname.join("contents")
+    main_dir.join("contents")
   end
 
   def self.url_base

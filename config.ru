@@ -10,4 +10,9 @@ Dixi::App.configure :development do
   Mustache.raise_on_context_miss = true
 end
 
+Dixi::App.configure do
+  $stdout = $stderr = Dixi::Log
+  use Rack::CommonLogger, $stdout
+end
+
 run Dixi::App.new
