@@ -31,8 +31,12 @@ module Dixi
   autoload :Version,  'src/version'
   autoload :Resource, 'src/resource'
   autoload :Helpers,  'src/helpers'
-  autoload :Log,      'src/log'
+  autoload :Logger,   'src/logger'
 
+
+  def self.logger
+    @logger ||= Dixi::Logger.new
+  end
 
   def self.main_dir
     Pathname.new(__FILE__).expand_path.dirname
