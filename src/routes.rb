@@ -17,11 +17,6 @@
 module Dixi
   class App
 
-    before do
-      Dixi.host = request.host
-    end
-
-
     get '/' do
       mustache :index
     end
@@ -48,6 +43,7 @@ module Dixi
 
     put '/:project/:version/*.yaml' do
       @project = Project.new( params[:project], params[:version] )
+      @project.host = request.host
       @resource = @project.resource( params[:splat][0] )
       is_new = !@resource.has_content?
 
@@ -94,6 +90,7 @@ module Dixi
 
     put '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
+      @project.host = request.host
       @resource = @project.resource( params[:splat][0] )
       is_new = !@resource.has_content?
 

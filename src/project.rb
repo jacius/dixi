@@ -21,9 +21,11 @@ module Dixi
     def initialize( name, version )
       @name = name
       @version = Dixi::Version.new(version)
+      @host = "unknown"
     end
 
     attr_reader :name, :version
+    attr_accessor :host
 
     def name_and_version
       @name + "/" + @version
@@ -99,7 +101,7 @@ module Dixi
       # Set up the user config
       cfg = Grit::Config.new(@repo)
       cfg["user.name"] = "Dixi Server"
-      cfg["user.email"] = "dixi@#{Dixi.host}"
+      cfg["user.email"] = "dixi@#{@host}"
 
       # First commit
       Dir.chdir( dir ) do

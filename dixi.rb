@@ -53,14 +53,6 @@ module Dixi
     URI.parse("/")
   end
 
-  def self.host
-    @host or "unknown"
-  end
-
-  def self.host=(new_host)
-    @host = new_host
-  end
-
 
   class App < Sinatra::Base
     use Rack::MethodOverride
