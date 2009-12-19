@@ -48,3 +48,8 @@ namespace :deploy do
     run "touch #{current_path}/tmp/restart.txt" 
   end
 end
+
+
+after :deploy do
+  run "ln -s #{shared_path}/contents #{release_path}/contents"
+end
