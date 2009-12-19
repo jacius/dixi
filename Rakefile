@@ -1,9 +1,28 @@
 
-# Development mode
+desc "Run Dixi in development mode."
 task :shotgun do
   sh( "shotgun --port 4567 --env development config.ru"  )
 end
 
+
+desc "Create capconfig.yaml template."
+task :capconfig do
+  if File.exist?("capconfig.yaml")
+    puts "ERROR: capconfig.yaml already exists! Aborting."
+  else
+    File.open("capconfig.yaml","w") { |f|
+      f.write("---
+# This is just a template. Change it to your own deployment details!
+:user: some_user
+:domain: my.domain.com
+:repository: git://repo.to.use/from/the/server.git
+:local_repository: ssh://repo.to.use/from/your/computer.git
+:deploy_to: /home/some_user/my.domain.com/
+:branch: master")
+    }
+    puts "Created capconfig.yaml. Edit it now to fill in your details."
+  end
+end
 
 
 #########
