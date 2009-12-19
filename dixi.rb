@@ -39,11 +39,11 @@ module Dixi
   end
 
   def self.main_dir
-    Pathname.new(__FILE__).expand_path.dirname
+    @main_dir ||= Pathname.new(__FILE__).expand_path.dirname
   end
 
   def self.contents_dir
-    main_dir.join("contents")
+    @contents_dir ||= main_dir.join("contents")
   end
 
   def self.url_base
