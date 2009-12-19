@@ -43,7 +43,10 @@ module Dixi
   end
 
   def self.contents_dir
-    @contents_dir ||= main_dir.join("contents")
+    @contents_dir ||= begin
+                        d = main_dir.join("contents")
+                        if d.symlink?; d.readlink else d end
+                      end
   end
 
   def self.url_base
