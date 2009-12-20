@@ -66,6 +66,7 @@ module Dixi
       else
         @project     = args[:project]
         @entry       = args[:entry]
+        @entry.gsub!(/[?!]/){ |char|  Rack::Utils.escape(char) }
         @parts       = @entry.split('/')
         @content     = nil
         @raw_content = nil
