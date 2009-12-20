@@ -46,11 +46,19 @@ module Dixi
     end
 
     def cmethods
-      content["cmethods"] || []
+      if content["cmethods"]
+        content["cmethods"].collect{ |m| construct_method( m ) }        
+      else
+        []
+      end
     end
 
     def imethods
-      content["imethods"] || []
+      if content["imethods"]
+        content["imethods"].collect{ |m| construct_method( m ) }        
+      else
+        []
+      end
     end
 
     def synopsis
@@ -64,6 +72,16 @@ module Dixi
 
     def template_read
       :read_classmod
+    end
+
+
+    private
+
+    def construct_method( name )
+      entry = "api/" + name.split(/\/|::|\.|#/).join("/")
+      Dixi::MethodResource.new( :project => @project,
+                                :entry => entry,
+                                :name => name )
     end
 
   end

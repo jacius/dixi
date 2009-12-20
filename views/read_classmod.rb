@@ -93,7 +93,7 @@ module Dixi
 
       def cmethods
         @resource.cmethods.to_enum(:each_with_index).map { |m,index|
-          { :name => m, :index => index }
+          { :name => m.name, :index => index }
         }
       end
 
@@ -104,7 +104,7 @@ module Dixi
 
       def imethods
         @resource.imethods.to_enum(:each_with_index).map { |m,index|
-          { :name => m, :index => index }
+          { :name => m.name, :index => index }
         }
       end
 
