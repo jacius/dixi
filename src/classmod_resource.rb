@@ -38,7 +38,11 @@ module Dixi
     end
 
     def includes
-      content["includes"] || []
+      if content["includes"]
+        content["includes"].collect{ |m| construct_classmod( m ) }
+      else
+        []
+      end
     end
 
     def constants
@@ -76,6 +80,13 @@ module Dixi
 
 
     private
+
+    def construct_classmod( name )
+      entry = "api/" + name.split(/\/|::|\.|#/).join("/")
+      Dixi::ClassmodResource.new( :project => @project,
+                                  :entry => entry,
+                                  :name => name )
+    end
 
     def construct_method( name )
       entry = "api/" + name.split(/\/|::|\.|#/).join("/")
