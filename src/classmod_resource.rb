@@ -34,7 +34,9 @@ module Dixi
     end
 
     def base
-      content["base"] || nil
+      if content["base"]
+        construct_classmod( content["base"] )
+      end
     end
 
     def includes
