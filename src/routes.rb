@@ -73,6 +73,13 @@ module Dixi
     ########
 
     get '/:project/:version/*' do
+
+      # If the URI ended with ?, assume they meant a method that ends
+      # with a question mark, which should have been %3f in the URI.
+      if env["REQUEST_URI"][-1] == ??
+        redirect env["REQUEST_URI"][0..-2]+"%3f", 302
+      end
+
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
 
