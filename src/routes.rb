@@ -47,7 +47,8 @@ module Dixi
       @resource = @project.resource( params[:splat][0] )
       is_new = !@resource.has_content?
 
-      @resource.save( :content => request.body.read, :raw => true )
+      @resource.raw_content = request.body.read
+      @resource.save
 
       if is_new
         @project.git_commit( "Created #{request.path_info} as YAML" )
@@ -101,8 +102,8 @@ module Dixi
       @resource = @project.resource( params[:splat][0] )
       is_new = !@resource.has_content?
 
-      @resource.save( :content => request.POST["content"],
-                      :raw => true )
+      @resource.raw_content = request.POST["content"]
+      @resource.save
 
       if is_new
         @project.git_commit( "Created #{request.path_info}" )

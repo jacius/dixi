@@ -125,11 +125,11 @@ module Dixi
 
 
     def save( options={} )
-      c = if options[:raw]
-            options[:content] || @raw_content
+      c = if options[:raw] or @content.nil?
+            @raw_content
           else
             require 'yaml'
-            YAML.dump( options[:content] || @content )
+            YAML.dump( @content )
           end
 
       filepath.dirname.mkpath
