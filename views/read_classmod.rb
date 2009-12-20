@@ -32,12 +32,13 @@ module Dixi
 
 
       def has_includes
+        puts @resource.includes.inspect
         not @resource.includes.empty?
       end
 
       def includes
         @resource.includes.to_enum(:each_with_index).map { |inc,index|
-          { :name => inc, :index => index }
+          { :name => inc.name, :url => inc.url_read, :index => index }
         }
       end
 
