@@ -92,9 +92,7 @@ module Dixi
       end
 
       def cmethods
-        @resource.cmethods.to_enum(:each_with_index).map { |m,index|
-          { :name => m.name, :index => index }
-        }
+        hashify_methods(@resource.cmethods)
       end
 
 
@@ -103,9 +101,7 @@ module Dixi
       end
 
       def imethods
-        @resource.imethods.to_enum(:each_with_index).map { |m,index|
-          { :name => m.name, :index => index }
-        }
+        hashify_methods(@resource.imethods)
       end
 
 
@@ -115,6 +111,15 @@ module Dixi
 
       def base
         @resource.base
+      end
+
+
+      private
+
+      def hashify_methods( methods )
+        methods.to_enum(:each_with_index).map { |m,index|
+          { :name => m.name, :url => m.url_read, :index => index }
+        }
       end
 
     end
