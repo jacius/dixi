@@ -4,13 +4,14 @@ Dixi
 Dixi = Docs + Wiki
 ------------------
 
-Dixi is a wiki app specifically designed for maintaining software
-documentation collaboratively. It is powered by Ruby, Sinatra, and
-Git.
+Dixi is a wiki app designed for creating and maintaining Ruby software
+documentation (especially library API docs) collaboratively. It is
+powered by Ruby, Sinatra, and Git (via Grit).
 
-Dixi is still in early development, so don't expect much at the
-moment. If you want to help, please email jacius+dixi at gmail.com
-or send a message to jacius on github.
+Dixi is still in early development (as of December 2009), so don't
+expect anything fancy yet. If you want to help make Dixi the most
+kickass documentation system ever, please email jacius+dixi at
+gmail.com or send a message to jacius on github.
 
 
 Why should I use Dixi?
@@ -63,19 +64,25 @@ There is nothing to install for Dixi itself. Just run it.
 Usage
 -----
 
-For development mode, do:
+### Development mode
 
-    rake shotgun
+Run `rake shotgun`, then point your browser to
+[http://localhost:4567/](http://localhost:4567/)
 
-    # or, if you don't have rake:
+But it's more interesting to go to, for example, [http://localhost:4567/mylibrary/1.0/Foo](http://localhost:4567/mylibrary/1.0/Foo)
 
-    shotgun -p 4567 config.ru
+### Production mode
 
-Then point your browser to [http://localhost:4567/](http://localhost:4567/)
+Dixi works well (for me) with Phusion Passenger. Follow the normal
+procedures for setting up a Rack app on your host.
 
-But it's more fun to go to, for example, [http://localhost:4567/mylibrary/1.0/Foo](http://localhost:4567/mylibrary/1.0/Foo)
+### Deploying with Capistrano
 
-For production mode... there is no production mode yet.
+Run `rake capconfig` to generate a capconfig.yaml file, then edit it
+to provide your deployment details (user name, host, etc.).
+
+Then deploy as usual for Capistrano (`cap deploy:setup` before the first
+time, then `cap deploy` to deploy).
 
 
 License
