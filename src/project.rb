@@ -91,17 +91,15 @@ module Dixi
 
     # Init repo and make first commit, then return a Grit::Repo instance.
     def new_git_repo
-      # The Grit API is so disjointed. Blech!
+      # Init the repo as a bare repo (because Grit::Repo can't init
+      # non-bare repos yet), then make it non-bare.
+      @repo = Grit::Repo.init_bare( dir.join(".git").to_s )
+      @repo.config["core.bare"] = "false"
+      @repo.config["core.logallrefupdates"]  = "true"
 
-      Grit::GitRuby::Repository.init( dir.join(".git").to_s, false )
-
-      # Now grab a Git::Repo object
-      @repo = Grit::Repo.new( dir.to_s )
-
-      # Set up the user config
-      cfg = Grit::Config.new(@repo)
-      cfg["user.name"] = "Dixi Server"
-      cfg["user.email"] = "dixi@#{@host}"
+      # Set up the committer for commits made on the server.
+      @repo.config["user.name"]  = "Dixi Server"
+      @repo.config["user.email"] = "dixi@#{@host}"
 
       # First commit
       Dir.chdir( dir ) do
