@@ -32,6 +32,7 @@ module Dixi
   autoload :Resource, 'src/resource'
   autoload :Helpers,  'src/helpers'
   autoload :Logger,   'src/logger'
+  autoload :Utils,    'src/utils'
 
 
   def self.logger
