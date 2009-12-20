@@ -111,7 +111,10 @@ module Dixi
       end
 
       def base
-        @resource.base
+        b = @resource.base
+        if b
+          { :base_name => b.name, :base_url => b.url_read }
+        end
       end
 
 
