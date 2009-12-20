@@ -21,12 +21,17 @@ module Dixi
 
   class MethodResource < Dixi::Resource
 
+    def initialize( args )
+      super
+      @name = args[:name]
+    end
+
     def type
       content["type"] || ""
     end
 
     def name
-      content["name"] || ""
+      @name || content["name"] || ""
     end
 
     def base

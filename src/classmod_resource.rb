@@ -20,12 +20,17 @@ module Dixi
   # Resource for Classes and Modules.
   class ClassmodResource < Dixi::Resource
 
+    def initialize( args )
+      super
+      @name = args[:name]
+    end
+
     def type
       content["type"] || "class/module"
     end
 
     def name
-      content["name"] || ""
+      @name || content["name"] || ""
     end
 
     def base
