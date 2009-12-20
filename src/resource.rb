@@ -99,14 +99,25 @@ module Dixi
 
     def raw_content=( raw )
       @raw_content = raw
+      @content = nil
     end
 
-    def content
+    def content( options={:rescue => true} )
       require 'yaml'
       @content ||= YAML.load( raw_content )
-    rescue
-      {}
+    rescue => error
+      if options[:rescue]
+        {}
+      else
+        raise error
+      end
     end
+
+    def content=( content )
+      @content = content
+      @raw_content = YAML.dump(content)
+    end
+
 
     def content_as_yaml
       raw_content
