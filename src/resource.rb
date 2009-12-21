@@ -175,6 +175,11 @@ module Dixi
       :edit_resource
     end
 
+
+    def inspect
+      "#<#{self.class} #{name.inspect}>"
+    end
+
   end
 
 end
