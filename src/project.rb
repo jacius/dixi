@@ -54,6 +54,55 @@ module Dixi
     end
 
 
+    # Returns a Hash "tree" of existing API resources in this project
+    # version.
+    #
+    def api_tree
+      tree = Dixi::Utils.ls_r( version_dir.join("api") ) { |path|
+        api_tree_process_path( path )
+      }
+      tree[ tree.keys[0] ]
+    end
+
+    # Do the heavy lifting for api_tree. Each path is converted
+    # based on the following rules:
+    # 
+    # 1. If it's a directory, make a ClassmodResource.
+    # 
+    # 2. If it's a YAML file with a matching directory (e.g.
+    #    Surface.yaml matches Surface), discard it (return nil)
+    #    because it would be a childless duplicate of #1
+    # 
+    # 3. If it's a YAML file without a matching directory, make a
+    #    Resource. It might become a ClassmodResource or a
+    #    MethodResource if its contents indicate a type.
+    # 
+    # 4. All other paths are discarded (return nil).
+    # 
+    def api_tree_process_path( path )
+      rel_path = path.relative_path_from( version_dir )
+
+      # Directory
+      if path.directory?
+        # Make a ClassmodResource for this directory
+        entry = rel_path.to_s.split(File::SEPARATOR).join("/")
+        Dixi::Resource.make( :project => self, :entry => entry )
+
+      # YAML file
+      elsif /(.+)\.yaml$/.match( rel_path.to_s )
+        entry = $1.split(File::SEPARATOR).join("/")        
+
+        # Only make a resource if there is no directory matching this
+        # file. E.g. For Surface.yaml, there is no Surface dir.
+        unless Pathname.new( path.to_s.sub(".yaml","") ).directory?
+          Dixi::Resource.make( :project => self, :entry => entry )
+        end
+      end
+    end
+
+    private :api_tree_process_path
+
+
     # Add the files to the index (staging area), to be committed
     # next time #commit is called. Used for both adding new files
     # and replacing the contents of an existing file.
