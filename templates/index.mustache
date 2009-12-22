@@ -21,4 +21,17 @@
   <a href="mailto:jacius+dixi at gmail.com">jacius+dixi at gmail.com</a>
   or send a message to
   <a href="http://github.com/jacius">jacius on github</a>.
-<p>
+</p>
+
+{{#has_projects}}
+  <h2>Projects</h2>
+  This wiki has documentation for the following projects:
+  {{#projects_hashed}}
+    <h3><a href="{{url}}">{{name}}</a></h3>
+    <p>Latest version: <a href="{{latest_url}}">{{latest_version}}</a></p>
+    {{#latest_has_tree}}
+      <h4>API</h4>
+      {{{latest_tree_html}}}
+    {{/latest_has_tree}}
+  {{/projects_hashed}}
+{{/has_projects}}
