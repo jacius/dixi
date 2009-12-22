@@ -73,6 +73,12 @@ module Dixi
     # HTML #
     ########
 
+    get '/:project/?' do
+      @project = Project.new( params[:project], :latest )
+      mustache :read_project
+    end
+
+
     get '/:project/:version/?' do
       @project = Project.new( params[:project], params[:version] )
       mustache :read_project
