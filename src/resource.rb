@@ -145,6 +145,14 @@ module Dixi
       @project.name_and_version + "/" + @entry
     end
 
+    def basename
+      @parts[-1]
+    end
+
+    def type
+      ""
+    end
+
 
     def url( extra="" )
       @project.url.join(@entry).to_s + extra
