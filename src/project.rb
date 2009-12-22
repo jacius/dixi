@@ -57,14 +57,19 @@ module Dixi
       self.class.new(@name, other_version)
     end
 
-    def latest_version
+
+    def all_versions
       dir.children.collect { |child|
         begin
           Dixi::Version.new( child.basename ) 
         rescue ArgumentError
           nil
         end
-      }.compact.max
+      }.compact.sort
+    end
+
+    def latest_version
+      all_versions[-1]
     end
 
 
