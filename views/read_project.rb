@@ -15,41 +15,36 @@
 #  
 
 
+require 'views/api_tree_view'
+
 module Dixi
   module Views
 
     class ReadProject < Mustache
+      include Dixi::Views::APITreeView
 
       def name
         @project.name
       end
 
-      def has_tree
+      def version
+        @project.version.to_s
+      end
+
+      def has_version
+        not version.empty?
+      end
+
+      def has_api_tree
         not api_tree.empty?
       end
 
       def api_tree
-        @api_tree ||= walk_tree(@project.api_tree, 5)
-        require 'pp'
-        puts @api_tree.pretty_inspect
-        @api_tree
+        @api_tree ||= @project.api_tree
       end
 
-      private
-
-      def walk_tree( tree, depth = 10 )
-        tree.collect{ |k,v|
-          children = if v.nil? or depth <= 0
-                       []
-                     else 
-                       walk_tree(v, depth - 1)
-                     end
-          { :name         => k.name,
-            :url          => k.url_read,
-            :has_children => (not children.empty?),
-            :children     => children,
-          }
-        }
+      def api_tree_html
+        htmlify_api_tree( api_tree )
       end
 
     end

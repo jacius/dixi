@@ -1,9 +1,6 @@
-<h1>{{name}}</h1>
+<h1>{{name}} {{#has_version}}(version {{version}}){{/has_version}}</h1>
 
-{{#has_tree}}
-  <ul>
-    {{#api_tree}}
-      {{> read_api_tree_partial }}
-    {{/api_tree}}
-  </ul>
-{{/has_tree}}
+{{#has_api_tree}}
+  <h2>API</h2>
+  {{{api_tree_html}}}
+{{/has_api_tree}}
