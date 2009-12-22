@@ -13,6 +13,9 @@ expect anything fancy yet. If you want to help make Dixi the most
 kickass documentation system ever, please email jacius+dixi at
 gmail.com or send a message to jacius on github.
 
+You can see and play with a live instance of Dixi at
+[http://dixi.jacius.info/](http://dixi.jacius.info/)
+
 
 Why should I use Dixi?
 ----------------------
@@ -40,6 +43,24 @@ Who should NOT use Dixi?
 
 * Developers who love to maintain documentation all by themselves,
   with no help from anyone else.
+
+
+FAQ
+---
+
+### Can I import my existing docs to Dixi?
+
+There will eventually be a companion script to import RI or YARD
+documentation to Dixi. For now, you must copy them to Dixi yourself.
+
+### Can I export docs from Dixi back into my project?
+
+Not currently. There will eventually be a way to export docs as HTML,
+RI, YARD, or stub code with RDoc-style documentation comments.
+
+There are no plans to offer a tool to re-embed the docs back into your
+real code as comments. The whole point of Dixi is that your docs
+*shouldn't* be embedded in your code.
 
 
 Install
