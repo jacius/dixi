@@ -18,9 +18,13 @@
 module Dixi
   class Project
 
-    def initialize( name, version )
+    def initialize( name, version=:latest )
       @name = name
-      @version = Dixi::Version.new(version)
+      @version = case version
+                 when :latest
+                   latest_version
+                 else Dixi::Version.new(version)
+                 end
       @host = "unknown"
     end
 
@@ -51,6 +55,16 @@ module Dixi
     # Return a different version of this project.
     def at_version( other_version )
       self.class.new(@name, other_version)
+    end
+
+    def latest_version
+      dir.children.collect { |child|
+        begin
+          Dixi::Version.new( child.basename ) 
+        rescue ArgumentError
+          nil
+        end
+      }.compact.max
     end
 
 
