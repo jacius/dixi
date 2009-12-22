@@ -48,15 +48,20 @@ module Dixi
       Dixi::Resource.make( :project => self, :entry => entry )
     end
 
+
     def url
-      Dixi.url_base.join(@name, @version.to_s)
+      Dixi.url_base.join(@name)
     end
+
+    def version_url
+      url.join(@version.to_s)
+    end
+
 
     # Return a different version of this project.
     def at_version( other_version )
       self.class.new(@name, other_version)
     end
-
 
     def all_versions
       dir.children.collect { |child|

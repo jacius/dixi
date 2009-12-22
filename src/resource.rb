@@ -155,7 +155,7 @@ module Dixi
 
 
     def url( extra="" )
-      @project.url.join(@entry).to_s + extra
+      @project.version_url.join(@entry).to_s + extra
     end
 
     def url_read
