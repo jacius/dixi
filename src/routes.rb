@@ -73,6 +73,12 @@ module Dixi
     # HTML #
     ########
 
+    get '/:project/:version' do
+      @project = Project.new( params[:project], params[:version] )
+      mustache :read_project
+    end
+
+
     get '/:project/:version/*' do
 
       # If the URI ended with ?, assume they meant a method that ends

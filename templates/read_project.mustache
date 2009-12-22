@@ -1,0 +1,9 @@
+<h1>{{name}}</h1>
+
+{{#has_tree}}
+  <ul>
+    {{#api_tree}}
+      {{> read_api_tree_partial }}
+    {{/api_tree}}
+  </ul>
+{{/has_tree}}
