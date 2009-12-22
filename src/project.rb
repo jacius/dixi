@@ -61,7 +61,7 @@ module Dixi
       tree = Dixi::Utils.ls_r( version_dir.join("api") ) { |path|
         api_tree_process_path( path )
       }
-      tree[ tree.keys[0] ]
+      tree[ tree.keys[0] ] or {}
     end
 
     # Do the heavy lifting for api_tree. Each path is converted
