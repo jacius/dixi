@@ -1,0 +1,9 @@
+<h1>
+  <a href="{{url}}">{{name}}</a>
+  {{#has_version}}{{version}}{{/has_version}}
+</h1>
+
+{{#has_api_tree}}
+  <h2>API</h2>
+  {{{api_tree_html}}}
+{{/has_api_tree}}

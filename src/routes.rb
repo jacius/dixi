@@ -81,7 +81,7 @@ module Dixi
 
     get '/:project/:version/?' do
       @project = Project.new( params[:project], params[:version] )
-      mustache :read_project
+      mustache :read_version
     end
 
 
