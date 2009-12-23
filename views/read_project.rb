@@ -27,6 +27,11 @@ module Dixi
         @project.name
       end
 
+      def url
+        @project.url
+      end
+
+
       def version
         @project.version.to_s
       end
@@ -34,6 +39,24 @@ module Dixi
       def has_version
         not version.empty?
       end
+
+      def latest_version
+        v = @project.latest_version
+        { :version => v.to_s,
+          :url => @project.at_version(v).version_url }
+      end
+
+      def old_versions_descending
+        all_versions_descending[1..-1]
+      end
+
+      def all_versions_descending
+        @project.all_versions.collect { |v|
+          { :version => v.to_s,
+            :url => @project.at_version(v).version_url }
+        }.reverse
+      end
+
 
       def has_api_tree
         not api_tree.empty?

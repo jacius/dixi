@@ -1,6 +1,18 @@
-<h1>{{name}} {{#has_version}}(version {{version}}){{/has_version}}</h1>
+<h1>{{name}}</h1>
+
+{{#has_version}}
+  <h2>Versions</h2>
+  <ul>
+    {{#latest_version}}
+      <li><strong><a href="{{url}}">{{version}}</a></strong></li>
+    {{/latest_version}}
+    {{#old_versions_descending}}
+      <li><a href="{{url}}">{{version}}</a></li>
+    {{/old_versions_descending}}
+  </ul>
+{{/has_version}}
 
 {{#has_api_tree}}
-  <h2>API</h2>
+  <h2>Current API ({{#latest_version}}{{version}}{{/latest_version}})</h2>
   {{{api_tree_html}}}
 {{/has_api_tree}}
