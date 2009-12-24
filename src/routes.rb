@@ -17,6 +17,38 @@
 module Dixi
   class App
 
+    helpers do
+
+      # Checks the request URI for certain special cases where URI
+      # syntax interferes with Ruby method syntax.
+      #
+      # Returns a URI that the user should be redirected to, or nil if
+      # they should not be redirected.
+      # 
+      def check_for_redirect( request_uri )
+        # If URI ends with ?, assume they meant a method that ends
+        # with a question mark, which should have been %3F in the URI.
+        if request_uri[-1..-1] == "?"
+          return request_uri[0..-2]+"%3F"
+        end
+
+        # Or if there are two ??'s, assume the first one should be %3F.
+        if request_uri =~ /\?\?/
+          return request_uri.gsub("??","%3F?")
+        end
+      end
+
+    end
+
+
+    before do
+      other_page = check_for_redirect( env["REQUEST_URI"] )
+      unless other_page.nil?
+        redirect other_page, 302
+      end
+    end
+
+
     get '/' do
       mustache :index
     end
@@ -86,13 +118,6 @@ module Dixi
 
 
     get '/:project/:version/*' do
-
-      # If the URI ended with ?, assume they meant a method that ends
-      # with a question mark, which should have been %3f in the URI.
-      if env["REQUEST_URI"][-1] == ??
-        redirect env["REQUEST_URI"][0..-2]+"%3f", 302
-      end
-
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
 
