@@ -32,42 +32,44 @@ the Rubygame namespace).
 
 The rules for link destinations are:
 
-* `[[::Full::Path::To::Klass]]` :
-  Link to a specific class/module. If that class/module doesn't exist
-  yet, the link is styled with the ".newpage" HTML class, and points
-  to the page to create that resource.
+* `[[::Full::Path::To::Classmod]]` :
+  Link to a specific classmod (i.e. class or module). If that classmod
+  doesn't exist yet, the link is styled with the ".newpage" HTML
+  class, and points to the page to create that resource.
 
-* `[[Klass]]` :
-  Ambiguous link to a class/module. Dixi tries to guess what
-  class/module you meant according to these rules:
+* `[[Classmod]]` :
+  Ambiguous link to a classmod. Dixi tries to guess what classmod you
+  meant according to these rules (the first matching rule is used):
 
-  1. If there is a class/module of that name in the top namespace,
-     link to that.
-  2. Else, if there is a class/module of that name in the current
-     namespace (i.e. defined under the current module or class), link
-     to that.
-  3. Else, if there is a class/module of that name which is a sibling
-     to the current namespace (same parent namespace), link to that.
-  4. Else, Dixi does a breadth-first search for a class/module of that
-     name anywhere in the current library.
-  5. Finally, none of the above rules matched, the link is rendered
-     as plain text span (not a link) with a ".deadlink" HTML class.
+  1. Look for a classmod of that name in the current classmod.
+  2. Look for a classmod of that name in the base (inherited)
+     classmod (if any), recursively.
+  3. Look for a classmod of that name in included modules (if any),
+     recursively.
+  4. Look for a classmod of that name in the top namespace.
+  5. Look for a classmod of that name that has the same parent as
+     the current classmod (e.g. Foo::Bar and Foo::Baz have the same
+     parent, Foo).
+  6. Do a breadth-first search for a classmod of that name anywhere
+     in the current library.
+  7. If none of the above rules matched, the text is rendered as
+     plain text span (not a link) with a ".deadlink" HTML class.
 
   The same rules are applied to partial paths. E.g.
   `[[Events::KeyPressed]]` could match `Rubygame::Events::KeyPressed`,
   but would not match (toplevel) `KeyPressed` or `Rubygame::KeyPressed`.
   
-* `[[Klass.cmethod]]` :
-  A link to a class method in that class/module.
+* `[[Classmod.cmethod]]` :
+  A link to a class method in that classmod.
 
-* `[[Klass#imethod]]` :
-  A link to a instance method in that class/module.
+* `[[Classmod#imethod]]` :
+  A link to a instance method in that classmod.
 
 * `[[.cmethod]]` :
-  A link to a class method in the current class/module.
+  A link to a class method in the current classmod.
 
 * `[[#imethod]]` :
-  A link to an instance method in the current class/module.
+  A link to an instance method in the current classmod.
 
 * `[[library:linkpath]]` :
   Link to something in the current version of another library in the
@@ -91,7 +93,7 @@ There are also special forms that affect how the link is formatted.
   A link to "linkpath" that renders as "linkpathsuffix". Useful for
   plural forms. "suffix" can be any string of one or more letters
   (including international letters). Not valid for links with custom
-  text. (You should add the suffix in the custom text in that case)
+  text. (You should add the suffix in the custom text in that case.)
 
     
 Classes
@@ -137,8 +139,7 @@ Class information is represented in a structure like this:
 Modules
 =======
 
-Same format as classes, except "type" is "module", and "base" is
-ignored.
+Same format as classes, except "type" is "module".
 
 
 Class Methods
