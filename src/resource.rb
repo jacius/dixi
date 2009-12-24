@@ -66,7 +66,6 @@ module Dixi
       else
         @project     = args[:project]
         @entry       = args[:entry]
-        @entry.gsub!(/[?!]/){ |char|  Rack::Utils.escape(char) }
         @parts       = @entry.split('/')
         @content     = nil
         @raw_content = nil
@@ -155,7 +154,8 @@ module Dixi
 
 
     def url( extra="" )
-      @project.version_url.join(@entry).to_s + extra
+      e = Rack::Utils.escape(@entry).gsub("%2F","/")
+      @project.version_url.join(e).to_s + extra
     end
 
     def url_read
