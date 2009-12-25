@@ -37,6 +37,15 @@ module Dixi
       end
 
 
+      def has_details
+        not @project.details.empty?
+      end
+
+      def details
+        kramdown( @project.details )
+      end
+
+
       def version
         @project.version.to_s
       end
