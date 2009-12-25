@@ -141,7 +141,7 @@ module Dixi
 
 
     def name
-      @project.name_and_version + "/" + @entry
+      @project.dirname_and_version + "/" + @entry
     end
 
     def basename

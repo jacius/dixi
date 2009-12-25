@@ -16,32 +16,51 @@
 
 
 module Dixi
-  class Project
+  class Project < Resource
 
-    def initialize( name, version=:latest )
-      @name = name
+    def initialize( dirname, version=:latest )
+      @dirname = dirname
       @version = case version
                  when :latest
                    latest_version
                  else Dixi::Version.new(version)
                  end
       @host = "unknown"
+      @project = self
+      @content     = nil
+      @raw_content = nil
     end
 
-    attr_reader :name, :version
+    attr_reader :dirname, :version
     attr_accessor :host
 
-    def name_and_version
-      @name + "/" + @version
+
+    def name
+      content["name"] || @dirname || ""
+    end
+
+    def details
+      content["details"] || ""
+    end
+
+
+    def dirname_and_version
+      @dirname + "/" + @version
     end
 
     def dir
-      Dixi.contents_dir.join(@name)
+      Dixi.contents_dir.join(@dirname)
     end
 
     def version_dir
       dir.join(@version.to_s)
     end
+
+    def filepath
+      # e.g. "/rubygame/project.yaml"
+      dir.join("project.yaml")
+    end
+
 
     def api
       @api ||= Dixi::API.new(self)
@@ -53,18 +72,18 @@ module Dixi
     end
 
 
-    def url
-      Dixi.url_base.join(@name)
+    def url( extra="" )
+      Dixi.url_base.join(@dirname).to_s + extra
     end
 
     def version_url
-      url.join(@version.to_s)
+      Dixi.url_base.join(@dirname, @version.to_s)
     end
 
 
     # Return a different version of this project.
     def at_version( other_version )
-      self.class.new(@name, other_version)
+      self.class.new(@dirname, other_version)
     end
 
     def all_versions
@@ -79,6 +98,11 @@ module Dixi
 
     def latest_version
       all_versions[-1]
+    end
+
+
+    def template_read
+      :read_project
     end
 
 
@@ -132,7 +156,7 @@ module Dixi
       # First commit
       Dir.chdir( dir ) do
         @repo.git.commit({}, "--allow-empty",
-                         "-m", "Created repository for project \"#{@name}\".")
+                         "-m", "Created repository for project \"#{@dirname}\".")
       end
 
       return @repo
