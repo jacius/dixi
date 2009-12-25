@@ -68,6 +68,10 @@ module Dixi
         @resource.url_submit
       end
 
+      def url_create
+        @resource.url_create
+      end
+
 
       def kramdown( str )
         require 'kramdown'
