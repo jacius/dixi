@@ -39,6 +39,10 @@ module Dixi
       content["name"] || @dirname || ""
     end
 
+    def synopsis
+      content["synopsis"] || ""
+    end
+
     def details
       content["details"] || ""
     end

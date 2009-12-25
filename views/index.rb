@@ -40,6 +40,8 @@ module Dixi
           api_tree = project.api.tree
           { :name => project.name,
             :url  => project.url,
+            :has_synopsis => (not project.synopsis.empty?),
+            :synopsis  => project.synopsis,
             :latest_version => project.version,
             :latest_url => project.version_url,
             :latest_has_tree => (not api_tree.empty?),
