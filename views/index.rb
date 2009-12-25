@@ -37,7 +37,7 @@ module Dixi
 
       def projects_hashed
         projects.collect { |project|
-          api_tree = project.api_tree
+          api_tree = project.api.tree
           { :name => project.name,
             :url  => project.url,
             :latest_version => project.version,

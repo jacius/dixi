@@ -63,7 +63,7 @@ module Dixi
       end
 
       def api_tree
-        @api_tree ||= @project.api_tree
+        @api_tree ||= @project.api.tree
       end
 
       def api_tree_html
