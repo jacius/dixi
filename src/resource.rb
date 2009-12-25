@@ -103,7 +103,7 @@ module Dixi
 
     def content( options={:rescue => true} )
       require 'yaml'
-      @content ||= YAML.load( raw_content )
+      @content ||= (YAML.load(raw_content) or {})
     rescue => error
       if options[:rescue]
         {}
