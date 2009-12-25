@@ -159,9 +159,9 @@ module Dixi
     post '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @project.host = request.host
-      @parent_resource = @project.resource( params[:splat][0] )
+      @parent = @project.resource( params[:splat][0] )
 
-      @resource = @parent_resource.child( request.POST["name"] )
+      @resource = @parent.child( request.POST["name"] )
       @overwrite = (true if params["overwrite"] =~ /y|yes|true/i)
       
       if @resource.has_content? and not @overwrite
@@ -170,12 +170,12 @@ module Dixi
         # overwrite it.
         session[:overwrite_name]    = request.POST["name"]
         session[:overwrite_content] = request.POST["content"]
-        redirect @parent_resource.url_create(:overwrite => true)
+        redirect @parent.url_create(:overwrite => true)
 
       else
         @resource.raw_content = request.POST["content"]
         @resource.save
-        @project.git_commit( "Created #{@resource.entry}" )
+        @project.git_commit( "Created /#{@resource.name}" )
         redirect @resource.url_read
       end
     end
