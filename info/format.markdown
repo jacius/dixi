@@ -96,6 +96,32 @@ There are also special forms that affect how the link is formatted.
   text. (You should add the suffix in the custom text in that case.)
 
     
+Projects
+========
+
+Project information is stored in a structure like this, in the
+"project.yaml" file within the project directory (e.g.
+"contents/rubygame/project.yaml"):
+
+    name: Rubygame
+    current_version: 2.6.2
+    synopsis:
+      Cross-platform game-development library for Ruby.
+    details: |
+      Rubygame is a cross-platform game-development library for Ruby,
+      inspired by Pygame. Rubygame strives to empower game developers
+      by providing them with powerful and flexible mid-to-high level
+      tools. Instead of worrying about low-level technical details,
+      you can focus your energy on more interesting things (like
+      making a fun game).
+
+Normally, Dixi will assume the highest existing version is the current
+version. You can override that by explicitly declaring the
+"current_version". For example, you could declare "current_version:
+1.0" while you are working on the docs for the upcoming version 2.0
+release, so that users won't think that 2.0 has been released.
+
+
 Classes
 =======
 
