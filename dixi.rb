@@ -62,6 +62,8 @@ module Dixi
     set :views, 'templates'
     set :mustaches, 'views'
     set :namespace, Dixi
+
+    enable :sessions
   end
 
 

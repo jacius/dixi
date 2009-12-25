@@ -121,14 +121,62 @@ module Dixi
       @project = Project.new( params[:project], params[:version] )
       @resource = @project.resource( params[:splat][0] )
 
+      # EDIT FORM
       if params.has_key? "edit"
         mustache @resource.template_edit
+
+      # CREATE FORM
+      elsif params.has_key? "create"
+        @parent = @resource
+
+        # Check if submitting this form should overwrite the current
+        # resources of the same name (if any). The view will inform
+        # the user of the situation.
+        @overwrite = (true if params["overwrite"] =~ /y|yes|true/i)
+        if @overwrite
+          @name    = session[:overwrite_name]    || ""
+          @content = session[:overwrite_content] || ""
+          @existing = @parent.child(@name)
+
+          # Clear the session
+          session[:overwrite_name] = nil
+          session[:overwrite_content] = nil
+        end
+
+        mustache @parent.template_create
+
+      # READ PAGE
       else
         if not @resource.has_content?
           headers( "Cache-Control" => "private" )
           status 404
         end
         mustache @resource.template_read
+      end
+    end
+
+
+    post '/:project/:version/*' do
+      @project = Project.new( params[:project], params[:version] )
+      @project.host = request.host
+      @parent_resource = @project.resource( params[:splat][0] )
+
+      @resource = @parent_resource.child( request.POST["name"] )
+      @overwrite = (true if params["overwrite"] =~ /y|yes|true/i)
+      
+      if @resource.has_content? and not @overwrite
+        # There is already a resource by this name. Redirect back to
+        # the create form to ask the user if they really want to
+        # overwrite it.
+        session[:overwrite_name]    = request.POST["name"]
+        session[:overwrite_content] = request.POST["content"]
+        redirect @parent_resource.url_create(:overwrite => true)
+
+      else
+        @resource.raw_content = request.POST["content"]
+        @resource.save
+        @project.git_commit( "Created #{@resource.entry}" )
+        redirect @resource.url_read
       end
     end
 

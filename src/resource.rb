@@ -153,6 +153,11 @@ module Dixi
     end
 
 
+    def child( name )
+      @project.resource( @entry + "/" + name )
+    end
+
+
     def url( extra="" )
       e = Rack::Utils.escape(@entry).gsub("%2F","/")
       @project.version_url.join(e).to_s + extra
@@ -174,6 +179,10 @@ module Dixi
       url "?edit"
     end
 
+    def url_create( options={} )
+      url "?create" + (options[:overwrite] ? "&overwrite=yes" : "")
+    end
+
 
     def template_read
       :read_resource
@@ -181,6 +190,10 @@ module Dixi
 
     def template_edit
       :edit_resource
+    end
+
+    def template_create
+      :create_resource
     end
 
 

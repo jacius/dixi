@@ -1,0 +1,18 @@
+<p>Creating resource under <b>{{parent}}</b></p>
+
+{{#overwrite}}
+  <p><strong>
+    WARNING: The resource <a href="{{existing_url_read}}">{{existing_name}}</a>
+    already exists. Press the "{{submit_verb}}" button to replace it with
+    the new content.
+  </strong></p>
+{{/overwrite}}
+
+<form method="post" action="{{url_submit}}">
+  <label for="name">Name:</label><br/>
+  <input name="name" type="text" size="20" value="{{name}}}" /><br/>
+  <label for="content">Content:</label><br/>
+  <textarea name="content" cols="80" rows="20">{{{content}}}</textarea><br/>
+  <input type="submit" value="{{submit_verb}}" />
+  <a href="{{url_read}}">Cancel</a>
+</form>
