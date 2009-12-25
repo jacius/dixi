@@ -29,6 +29,7 @@ module Dixi
 
   autoload :Project,  'src/project'
   autoload :Version,  'src/version'
+  autoload :API,      'src/api'
   autoload :Resource, 'src/resource'
   autoload :Helpers,  'src/helpers'
   autoload :Logger,   'src/logger'
