@@ -1,4 +1,4 @@
-<h1>{{name}}</h1>
+<h1>Project: {{name}}</h1>
 
 {{#has_version}}
   <h2>Versions</h2>
@@ -16,3 +16,5 @@
   <h2>Current API ({{#latest_version}}{{version}}{{/latest_version}})</h2>
   {{{api_tree_html}}}
 {{/has_api_tree}}
+
+<p><a href="{{url_edit}}">Edit this project</a></p>

@@ -107,8 +107,33 @@ module Dixi
 
     get '/:project/?' do
       @project = Project.new( params[:project], :latest )
-      mustache :read_project
+      @resource = @project
+
+      if params.has_key? "edit"
+        mustache @project.template_edit
+      else
+        mustache @project.template_read
+      end
     end
+
+
+    put '/:project' do
+      @project = Project.new( params[:project] )
+      @project.host = request.host
+      is_new = !@project.has_content?
+
+      @project.raw_content = request.POST["content"]
+      @project.save
+
+      if is_new
+        @project.git_commit( "Created #{request.path_info}" )
+      else
+        @project.git_commit( "Edited #{request.path_info}" )
+      end
+
+      redirect @project.url_read
+    end
+
 
 
     get '/:project/:version/?' do

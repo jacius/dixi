@@ -15,12 +15,13 @@
 #  
 
 
+require 'views/resource_view.rb'
 require 'views/api_tree_view'
 
 module Dixi
   module Views
 
-    class ReadProject < Mustache
+    class ReadProject < ResourceView
       include Dixi::Views::APITreeView
 
       def name
@@ -29,6 +30,10 @@ module Dixi
 
       def url
         @project.url
+      end
+
+      def url_edit
+        @project.url_edit
       end
 
 
