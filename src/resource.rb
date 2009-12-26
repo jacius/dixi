@@ -140,6 +140,11 @@ module Dixi
     end
 
 
+    def delete
+      @project.git_remove( filepath )
+    end
+
+
     def name
       @project.dirname_and_version + "/" + @entry
     end
@@ -183,6 +188,10 @@ module Dixi
       url "?create" + (options[:overwrite] ? "&overwrite=yes" : "")
     end
 
+    def url_delete
+      url "?delete"
+    end
+
 
     def template_read
       :read_resource
@@ -194,6 +203,10 @@ module Dixi
 
     def template_create
       :create_resource
+    end
+
+    def template_delete
+      :delete_resource
     end
 
 

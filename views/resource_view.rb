@@ -72,6 +72,10 @@ module Dixi
         @resource.url_create
       end
 
+      def url_delete
+        @resource.url_delete
+      end
+
 
       def kramdown( str )
         require 'kramdown'

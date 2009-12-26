@@ -100,6 +100,26 @@ module Dixi
     end
 
 
+    delete '/:project/:version/*.yaml' do
+      @project = Project.new( params[:project], params[:version] )
+      @project.host = request.host
+      @resource = @project.resource( params[:splat][0] )
+
+      @resource.delete
+      @project.git_commit( "Deleted #{request.path_info}" )
+
+      headers["Location"] = @resource.url_read_yaml
+      headers["Cache-Control"] = "private"
+      content_type '.yaml', :charset => 'utf-8'
+      status 200
+
+      YAML.dump("message" => "Resource deleted.",
+                "uri" => {
+                  "yaml" => @resource.url_read_yaml,
+                  "html" => @resource.url_read })
+    end
+
+
 
     ########
     # HTML #
@@ -170,6 +190,10 @@ module Dixi
 
         mustache @parent.template_create
 
+      # DELETE FORM
+      elsif params.has_key? "delete"
+        mustache @resource.template_delete
+
       # READ PAGE
       else
         if not @resource.has_content?
@@ -220,6 +244,18 @@ module Dixi
       else
         @project.git_commit( "Edited #{request.path_info}" )
       end
+
+      redirect @resource.url_read
+    end
+
+
+    delete '/:project/:version/*' do
+      @project = Project.new( params[:project], params[:version] )
+      @project.host = request.host
+      @resource = @project.resource( params[:splat][0] )
+
+      @resource.delete
+      @project.git_commit( "Deleted #{request.path_info}" )
 
       redirect @resource.url_read
     end
