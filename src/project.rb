@@ -119,11 +119,24 @@ module Dixi
     # 
     def git_add( *paths )
       Dir.chdir( dir ) do
-        git_repo.git.add({}, *(paths.flatten.collect{|p| p.to_s}) )
+        git_repo.add( *(paths.flatten.collect{|p| p.to_s}) )
       end
     end
 
-    # Commit all the changes that were added with #add.
+    # Remove the files to the index (staging area), to be committed
+    # next time #commit is called.
+    # 
+    # paths is one or more absolute paths (as strings or Pathnames)
+    # to files to remove.
+    # 
+    def git_remove( *paths )
+      Dir.chdir( dir ) do
+        git_repo.remove( *(paths.flatten.collect{|p| p.to_s}) )
+      end
+    end
+
+    # Commit all the changes that were staged with #git_add or
+    # #git_remove.
     def git_commit( message )
       Dir.chdir( dir ) do
         git_repo.commit_index(message)          
