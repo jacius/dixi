@@ -154,7 +154,7 @@ module Dixi
     end
 
     def type
-      ""
+      "generic resource"
     end
 
 
