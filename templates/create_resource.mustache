@@ -9,8 +9,12 @@
 {{/overwrite}}
 
 <form method="post" action="{{url_submit}}">
-  <label for="name">Name:</label><br/>
+  <label for="name">Name:</label>
   <input name="name" type="text" size="20" value="{{name}}}" /><br/>
+  <label for="type">Type:</label>
+  <select name="type">
+    {{{type_options}}}
+  </select><br/>
   <label for="content">Content:</label><br/>
   <textarea name="content" cols="80" rows="20">{{{content}}}</textarea><br/>
   <input type="submit" value="{{submit_verb}}" />

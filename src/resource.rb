@@ -26,6 +26,12 @@ require 'src/method_resource'
 module Dixi
   class Resource
 
+    # All supported resource types, in the order they should be shown
+    # to the user as options.
+    ALL_TYPES = ["generic resource", "module", "class",
+                 "module method", "class method", "instance method"]
+
+
     # Create an appropriate resource instance based on the content
     # type. E.g. if type is "module", makes a ModuleResource.
     # If there's no type match, just returns a Resource.

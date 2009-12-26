@@ -50,6 +50,13 @@ module Dixi
         type.capitalize
       end
 
+      def type_options
+        Dixi::Resource::ALL_TYPES.collect { |type|
+          selected = (self.type == type) ? " selected=\"true\"" : ""
+          "<option value=\"#{type}\"#{selected}>#{type.capitalize}</option>"
+        }.join("\n")
+      end
+
 
       def file
         @resource.filepath

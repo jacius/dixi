@@ -34,6 +34,10 @@ module Dixi
         @name || ""
       end
 
+      def type
+        ""
+      end
+
       def content
         @content || ""
       end

@@ -223,6 +223,9 @@ module Dixi
 
       else
         @resource.raw_content = request.POST["content"]
+        if request.POST["type"]
+          @resource.content.merge!( "type" => request.POST["type"] )
+        end
         @resource.save
         @project.git_commit( "Created /#{@resource.name}" )
         redirect @resource.url_read
@@ -237,6 +240,9 @@ module Dixi
       is_new = !@resource.has_content?
 
       @resource.raw_content = request.POST["content"]
+      if request.POST["type"]
+        @resource.content.merge!( "type" => request.POST["type"] )
+      end
       @resource.save
 
       if is_new
