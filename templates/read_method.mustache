@@ -1,4 +1,6 @@
-<h1>{{name}} ({{type}})</h1>
+<h1>
+  {{name}} ({{#not_public}}{{visibility}} {{/not_public}}{{type}})
+</h1>
 
 {{#no_content}}
   <p>This {{type}} does not have any documentation yet.</p>

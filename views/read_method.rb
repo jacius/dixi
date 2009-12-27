@@ -96,6 +96,27 @@ module Dixi
         not has_details
       end
 
+
+      def visibility
+        @resource.visibility
+      end
+
+      def is_private
+        @resource.visibility == "private"
+      end
+
+      def is_protected
+        @resource.visibility == "protected"
+      end
+
+      def is_public
+        @resource.visibility == "public"
+      end
+
+      def not_public
+        not is_public
+      end
+
     end
 
   end

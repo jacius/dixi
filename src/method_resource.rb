@@ -56,6 +56,10 @@ module Dixi
       content["details"] || ""
     end
 
+    def visibility
+      content["visibility"] || "public"
+    end
+
 
     def template_read
       :read_method
