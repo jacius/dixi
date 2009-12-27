@@ -1,11 +1,12 @@
 <h1>Project: {{name}}</h1>
 
 {{#has_details}}
+  <a id="details" />
   {{{details}}}
 {{/has_details}}
 
 {{#has_version}}
-  <h2>Versions</h2>
+  <h2 id="versions">Versions</h2>
   <ul>
     {{#latest_version}}
       <li><strong><a href="{{url}}">{{version}}</a></strong></li>
@@ -17,7 +18,7 @@
 {{/has_version}}
 
 {{#has_api_tree}}
-  <h2>Current API ({{#latest_version}}{{version}}{{/latest_version}})</h2>
+  <h2 id="api">Current API ({{#latest_version}}{{version}}{{/latest_version}})</h2>
   {{{api_tree_html}}}
 {{/has_api_tree}}
 
