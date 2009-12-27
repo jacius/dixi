@@ -55,7 +55,7 @@ module Dixi
 
 
       def has_synopsis
-        not @resource.synopsis.empty?
+        not (@resource.synopsis.empty? and @resource.details.empty?)
       end
 
       def no_synopsis
@@ -63,7 +63,14 @@ module Dixi
       end
 
       def synopsis
-        kramdown @resource.synopsis
+        if (not @resource.synopsis.empty?)
+          kramdown( @resource.synopsis )
+        elsif (not @resource.details.empty?)
+          kramdown( Dixi::Utils.snip(@resource.details, 300) +
+                    " ..." )
+        else
+          ""
+        end
       end
 
       def raw_synopsis
