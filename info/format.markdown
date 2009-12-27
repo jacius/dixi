@@ -130,8 +130,12 @@ Class information is represented in a structure like this:
     type: class
     name: Rubygame::Screen
     base: Rubygame::Surface
-    includes: []
-    constants: []
+    includes:
+      - Rubygame::NamedResource
+    constants:
+      - name: Rubygame::Screen::FOO
+        value: \"bar\"
+        info: A fake constant I made up for demo purposes.
     cmethods:
       - Rubygame::Screen.new
       - Rubygame::Screen.close
