@@ -69,7 +69,7 @@ module Dixi
           kramdown( @resource.synopsis )
         elsif (not @resource.details.empty?)
           kramdown( Dixi::Utils.snip(@resource.details, 300) +
-                    " ..." )
+                    " ([Continued...](#{@resource.url_read+'#details'}))" )
         else
           ""
         end
