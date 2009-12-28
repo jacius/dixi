@@ -113,6 +113,28 @@ module Dixi
       end
 
 
+      def has_attributes
+        not attributes.empty?
+      end
+
+      def attributes
+        @attributes = @resource.attributes.collect{ |attr|
+          { :name        => attr.name,
+            :read        => attr.read?,
+            :write       => attr.write?,
+            :rw          => attr.rw,
+            :has_rw      => (not attr.rw.empty?),
+            :type        => attr.type,
+            :has_type    => attr.has_type?,
+            :default     => attr.default,
+            :has_default => attr.has_default?,
+            :info        => kramdown( attr.info ),
+            :has_info    => attr.has_info?,
+          }
+        }
+      end
+
+
       def has_base
         not @resource.base.nil?
       end

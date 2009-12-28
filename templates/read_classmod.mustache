@@ -61,6 +61,31 @@
   {{/has_imethods}}
 
 
+  {{#has_attributes}}
+    <h2 id="attributes">Attributes</h2>
+    <ul>
+      {{#attributes}}
+        <li>
+          <p>{{name}}
+            {{#has_rw}}
+              [{{rw}}]
+            {{/has_rw}}
+          </p>
+          {{#has_info}}
+            {{{info}}}
+          {{/has_info}}
+          {{#has_type}}
+            <p>Type: {{type}}</p>
+          {{/has_type}}
+          {{#has_default}}
+            <p>Default: {{default}}</p>
+          {{/has_default}}
+        </li>
+      {{/attributes}}
+    </ul>
+  {{/has_attributes}}
+
+
   {{#has_details}}
     <h2 id="details">Details</h2>
     {{{details}}}
