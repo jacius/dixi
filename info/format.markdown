@@ -134,8 +134,15 @@ Class information is represented in a structure like this:
       - Rubygame::NamedResource
     constants:
       - name: Rubygame::Screen::FOO
-        value: \"bar\"
+        value: "\"bar\""
         info: A fake constant I made up for demo purposes.
+    attributes:
+      - name: foo
+        type: String
+        info: A fake attribute I made up for demo purposes.
+        default: "\"baz\""
+        read: true    # has a read accessor?
+        write: false  # has a write accessor?
     cmethods:
       - Rubygame::Screen.new
       - Rubygame::Screen.close
