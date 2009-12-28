@@ -35,7 +35,11 @@
     <h2 id="constants">Constants:</h2>
     <ul>
       {{#constants}}
-        <li>{{name}}</li>
+        <li>
+          <strong>{{name}}</strong>
+          {{#has_value}} = {{value}}{{/has_value}}
+          {{#has_info}} {{{info}}} {{/has_info}}
+        </li>
       {{/constants}}
     </ul>
   {{/has_constants}}

@@ -48,7 +48,14 @@ module Dixi
     end
 
     def constants
-      content["constants"] || []
+      content["constants"].collect{ |c|
+        { "name"  => c["name"]  || "",
+          "value" => c["value"] || "",
+          "info"  => c["info"]  || "",
+        }
+      }
+    rescue
+      []
     end
 
     def cmethods

@@ -48,8 +48,14 @@ module Dixi
       end
 
       def constants
-        @resource.constants.to_enum(:each_with_index).map { |const,index|
-          { :name => const, :index => index }
+        @resource.constants.to_enum(:each_with_index).collect { |const,index|
+          { :name      => const["name"],
+            :has_value => (not const["value"].empty?),
+            :value     => const["value"],
+            :has_info  => (not const["info"].empty?),
+            :info      => kramdown( const["info"] ),
+            :index     => index,
+          }
         }
       end
 
