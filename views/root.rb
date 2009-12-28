@@ -20,7 +20,7 @@ require 'views/api_tree_view'
 module Dixi
   module Views
 
-    class Index < Mustache
+    class Root < Mustache
       include Dixi::Views::APITreeView
 
       def has_projects

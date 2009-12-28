@@ -50,7 +50,7 @@ module Dixi
 
 
     get '/' do
-      mustache :index
+      mustache :root
     end
 
     
