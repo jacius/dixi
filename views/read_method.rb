@@ -40,7 +40,7 @@ module Dixi
       end
 
       def has_base
-        not @resource.base.nil?
+        not @resource.base.empty?
       end
 
 
