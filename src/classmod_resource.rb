@@ -67,6 +67,13 @@ module Dixi
       end
     end
 
+    def attributes
+      require 'src/attribute'
+      content["attributes"].collect{ |attr| Dixi::Attribute.new(attr) }
+    rescue
+      []
+    end
+
     def synopsis
       content["synopsis"] || ""
     end
