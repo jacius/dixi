@@ -116,10 +116,10 @@ Project information is stored in a structure like this, in the
       making a fun game).
 
 Normally, Dixi will assume the highest existing version is the current
-version. You can override that by explicitly declaring the
-"current_version". For example, you could declare "current_version:
-1.0" while you are working on the docs for the upcoming version 2.0
-release, so that users won't think that 2.0 has been released.
+version. You can override that by declaring current_version. For
+example, you could declare "current_version: 1.0" while you are
+working on the docs for the upcoming version 2.0, so that users won't
+think that 2.0 has been released.
 
 
 Classes
@@ -173,10 +173,30 @@ Class information is represented in a structure like this:
       ways to refresh all or part of the Screen.
     
 
+If synopsis is missing but details is declared, Dixi will use part of
+the details as an ad hoc synopsis, when necessary.
+
+"cmethods" means class methods, methods that are called on the class
+itself. "imethods" means instance methods, methods that are called on
+an instance of the class.
+
+Dixi automatically scans for class and instance methods based on
+existing files. If you declare cmethods and/or imethods, the methods
+you list will also be displayed, even if they don't exist yet.
+
+
 Modules
 =======
 
-Same format as classes, except "type" is "module".
+Same format as classes, except "type" is "module", and there is an
+additional "mmethods" (meaning "module methods") section.
+
+In the context of a module, "cmethods" means methods that a class
+would gain as class methods if it included the module as a mixin.
+"imethods" means instance methods that a class would gain if it
+included the module, and also methods that an object would gain if it
+were extended with the module. "mmethods" means methods that are
+called on the module itself.
 
 
 Class Methods
