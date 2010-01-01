@@ -37,6 +37,11 @@ module Dixi
                            :entry => "api/"+entry )
     end
 
+    def matching( entry, type=nil )
+      Dixi::Resource.matching( self.project, "api/"+entry, type )
+    end
+
+
     # Returns a Hash "tree" of existing API resources in this project
     # version.
     #

@@ -46,6 +46,44 @@ module Dixi
     SUFFIX_REGEXP = /(.*)(-(?:im|cm|mm|c|m))(\.yaml)?$/
 
 
+    # Returns all existing resources in the project that match the
+    # given entry, or an empty Array if no resources match.
+    # 
+    # If type is specified, only resources of that type (checked by
+    # type suffix in the filename) will match. There will always be
+    # either zero or one result in this case, because there cannot be
+    # more than one resource with the same entry and type.
+    # 
+    def self.matching( project, entry, type=nil )
+      Dixi.logger.info( "Resource.matching( project=#{project.inspect}, " +
+                        "entry=#{entry.inspect}, type=#{type.inspect} )" )
+
+      suffix =
+        if SUFFIX_REGEXP =~ entry
+          Dixi.logger.info( "#{entry} already has suffix: #{$2.inspect}" )
+          ""
+        else
+          TYPE_SUFFIXES[type] || "*"
+        end
+
+      suffix += ".yaml" unless entry =~ /\.yaml$/
+
+      pathglob = project.version_dir.join(*entry.split("/")).to_s + suffix
+      Dixi.logger.info( "#{entry}'s pathglob is #{pathglob.inspect}" )
+
+      Pathname.glob( pathglob ).collect do |filepath|
+        unless filepath.directory?
+          Dixi.logger.info( "Found #{filepath}." )
+
+          suf = (SUFFIX_REGEXP =~ filepath.to_s) ? $2 : ""
+          make( :project  => project,
+                :entry    => entry + suf,
+                :type     => type )
+        end
+      end.compact
+    end
+
+
     # Create an appropriate resource instance based on the content
     # type. E.g. if type is "module", makes a ModuleResource.
     # If there's no type match, just returns a Resource.

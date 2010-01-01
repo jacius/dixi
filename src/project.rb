@@ -75,6 +75,10 @@ module Dixi
       Dixi::Resource.make( :project => self, :entry => entry )
     end
 
+    def matching( entry, type=nil )
+      Dixi::Resource.matching( self, entry, type )
+    end
+
 
     def url( extra="" )
       Dixi.url_base.join(@dirname).to_s + extra
