@@ -58,8 +58,14 @@ module Dixi
       end
 
 
-      def file
-        @resource.filepath
+      def filepath?
+        not filepath.nil?
+      end
+
+      def filepath
+        @resource.filepath.relative_path_from( Dixi.contents_dir )
+      rescue
+        nil
       end
 
 
