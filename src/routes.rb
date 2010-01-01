@@ -38,6 +38,12 @@ module Dixi
         end
       end
 
+
+      def get_resource( project, entry, type=nil )
+        project.matching(entry, type).first or project.resource(entry)
+      end
+
+
     end
 
 
@@ -60,7 +66,7 @@ module Dixi
 
     get '/:project/:version/*.yaml' do
       @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
 
       content_type '.yaml', :charset => 'utf-8'
 
@@ -76,7 +82,7 @@ module Dixi
     put '/:project/:version/*.yaml' do
       @project = Project.new( params[:project], params[:version] )
       @project.host = request.host
-      @resource = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
       is_new = !@resource.has_content?
 
       @resource.raw_content = request.body.read
@@ -103,7 +109,7 @@ module Dixi
     delete '/:project/:version/*.yaml' do
       @project = Project.new( params[:project], params[:version] )
       @project.host = request.host
-      @resource = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
 
       @resource.delete
       @project.git_commit( "Deleted #{request.path_info}" )
@@ -164,7 +170,7 @@ module Dixi
 
     get '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
-      @resource = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
 
       # EDIT FORM
       if params.has_key? "edit"
@@ -208,7 +214,7 @@ module Dixi
     post '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @project.host = request.host
-      @parent = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
 
       @resource = @parent.child( request.POST["name"] )
       @overwrite = (true if params["overwrite"] =~ /y|yes|true/i)
@@ -236,7 +242,7 @@ module Dixi
     put '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @project.host = request.host
-      @resource = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
       is_new = !@resource.has_content?
 
       @resource.raw_content = request.POST["content"]
@@ -258,7 +264,7 @@ module Dixi
     delete '/:project/:version/*' do
       @project = Project.new( params[:project], params[:version] )
       @project.host = request.host
-      @resource = @project.resource( params[:splat][0] )
+      @resource = get_resource( @project, params[:splat][0] )
 
       @resource.delete
       @project.git_commit( "Deleted #{request.path_info}" )
