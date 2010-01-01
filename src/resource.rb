@@ -31,6 +31,20 @@ module Dixi
     ALL_TYPES = ["generic resource", "module", "class",
                  "module method", "class method", "instance method"]
 
+    TYPE_SUFFIXES = {
+      "module"          => "-m",
+      "class"           => "-c",
+      "module method"   => "-mm",
+      "class method"    => "-cm",
+      "instance method" => "-im",
+    }
+
+    # Matches strings ending with a type suffix, plus maybe ".yaml".
+    # Group 1 will be everything before the type suffix.
+    # Group 2 will be the type suffix (including the leading dash).
+    # Group 3 will be ".yaml" or nil.
+    SUFFIX_REGEXP = /(.*)(-(?:im|cm|mm|c|m))(\.yaml)?$/
+
 
     # Create an appropriate resource instance based on the content
     # type. E.g. if type is "module", makes a ModuleResource.
@@ -74,6 +88,10 @@ module Dixi
         @project     = args[:project]
         @type        = args[:type]
         @entry       = args[:entry]
+        if @entry =~ SUFFIX_REGEXP
+          @entry = $1
+          @type  = TYPE_SUFFIXES.invert[$2]
+        end
         @parts       = @entry.split('/')
         @content     = nil
         @raw_content = nil
@@ -88,7 +106,8 @@ module Dixi
 
 
     def filepath
-      Pathname.new(@project.version_dir.join(*@parts).to_s + ".yaml")
+      Pathname.new(@project.version_dir.join(*@parts).to_s +
+                   type_suffix + ".yaml")
     end
 
     def has_content?
@@ -172,6 +191,14 @@ module Dixi
 
     def type=( new_type )
       @type = content["type"] = new_type
+    end
+
+    def type_suffix
+      if @entry =~ SUFFIX_REGEXP
+        "" # already has a suffix
+      else
+        TYPE_SUFFIXES[type] || ""
+      end
     end
 
 
