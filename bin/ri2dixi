@@ -29,6 +29,16 @@ NAME = "ri2dixi"
 VERSION = [0,1]
 
 
+# Copied from dixi/src/resource.rb, 2010-01-01
+TYPE_SUFFIXES = {
+  "module"          => "-m",
+  "class"           => "-c",
+  "module method"   => "-mm",
+  "class method"    => "-cm",
+  "instance method" => "-im",
+}
+
+
 def main
   options = handle_options
   options[:input].each{ |dir|  process_dir(dir, options[:output]) }
@@ -121,6 +131,7 @@ def process_file( input_file, output_dir )
   data = RIDumper.dump_ri( YAML.load_file( input_file ) )
 
   parts = data["name"].split(/::|#|\./)
+  parts[-1] += TYPE_SUFFIXES[data["type"]] || ""
   parts[-1] += ".yaml"
   output_file = output_dir.join( *parts )
   puts output_file
