@@ -27,11 +27,11 @@ module Dixi
     end
 
     def type
-      content["type"] || ""
+      @type || content["type"] || "method"
     end
 
     def name
-      @name || content["name"] || ""
+      @name || content["name"] || super
     end
 
     def base

@@ -41,7 +41,7 @@ module Dixi
 
       return resource unless resource.content
 
-      case resource.content["type"]
+      case resource.type
       when /method/i
         return Dixi::MethodResource.new( :resource => resource )
       when /class|module/i
@@ -63,6 +63,7 @@ module Dixi
       if args[:resource]
         other        = args[:resource]
         @project     = other.project
+        @type        = other.type
         @entry       = other.entry
         @parts       = @entry.split('/')
         @content     = nil
@@ -71,6 +72,7 @@ module Dixi
       # Create from a project and entry
       else
         @project     = args[:project]
+        @type        = args[:type]
         @entry       = args[:entry]
         @parts       = @entry.split('/')
         @content     = nil
@@ -159,8 +161,17 @@ module Dixi
       @parts[-1]
     end
 
+
     def type
-      "generic resource"
+      unless @content.nil? or @content.empty?
+        @type || content["type"] || "generic resource"
+      else
+        @type || "generic resource"
+      end
+    end
+
+    def type=( new_type )
+      @type = content["type"] = new_type
     end
 
 
