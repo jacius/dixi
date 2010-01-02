@@ -245,6 +245,40 @@ module Dixi
     end
 
 
+    # Returns an array of all existing resources which are children of
+    # this resource, or [] if there are no children.
+    # 
+    # A child is a resource contained within this resource. For
+    # example, "api/Rubygame/Surface" is a child of "api/Rubygame".
+    # 
+    def children
+      # Generate a pathname for a possible directory corresponding to
+      # this resource. E.g. the directory for "api/Rubygame-m" is
+      # "api/Rubygame/" (type suffix is discarded).
+      dir = @project.version_dir.join(*@parts)
+
+      # No directory means no children.
+      return [] unless dir.directory?
+
+      # Create resources for all the YAML files and subdirectories
+      # within this resource's directory.
+      dir.children.sort.collect { |path|
+        entry = path.relative_path_from(@project.version_dir).to_s
+        entry = entry.split(File::SEPARATOR).join("/")
+
+        if path.directory?
+          # If it's a directory and it doesn't have a matching YAML
+          # file, create a generic resource to represent it.
+          if @project.matching(entry).empty?
+            @project.resource( entry )
+          end
+        elsif SUFFIX_REGEXP =~ entry.to_s
+          @project.resource( entry )
+        end
+      }.compact
+    end
+
+
     def url( extra="" )
       e = Rack::Utils.escape(@entry).gsub("%2F","/")
       @project.version_url.join(e).to_s + extra
