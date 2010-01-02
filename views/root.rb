@@ -37,15 +37,19 @@ module Dixi
 
       def projects_hashed
         projects.collect { |project|
-          api_tree = project.api.tree
+          children = project.api.children
+          children_html = children.collect{ |child|
+            htmlify_api_tree( child )
+          }.join("\n")
+
           { :name => project.name,
             :url  => project.url,
             :has_synopsis => (not project.synopsis.empty?),
             :synopsis  => project.synopsis,
             :latest_version => project.version,
             :latest_url => project.version_url,
-            :latest_has_tree => (not api_tree.empty?),
-            :latest_tree_html => htmlify_api_tree( api_tree ),
+            :latest_has_tree => (not children.empty?),
+            :latest_tree_html => children_html,
           }
         }
       end

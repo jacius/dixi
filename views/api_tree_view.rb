@@ -25,20 +25,20 @@ module Dixi
 
       private
 
-      def walk_api_tree( tree, maxdepth )
-        return [] if tree.empty? or maxdepth <= 0
-        render = tree.collect{ |res,children|
-          children = if children.nil?
-                       []
-                     else 
-                       walk_api_tree(children, maxdepth - 1)
-                     end
-          ["<li><a href=\"#{res.url}\">#{res.basename}</a>"] +
-            [(res.type.empty? ? "" : " (#{res.type})")] +
-            children + 
-            ["</li>\n"]
+      def walk_api_tree( resource, maxdepth )
+        return [] if maxdepth <= 0
+
+        children = resource.children
+        return [] if children.empty?
+
+        children_html = children.collect{ |child|
+          ["<li><a href=\"#{child.url}\">#{child.basename}</a>"] +
+          [(child.type.empty? ? "" : " (#{child.type})")] +
+          walk_api_tree(child, maxdepth - 1) +
+          ["</li>\n"]
         }.flatten
-        ["\n<ul>\n"] + render + ["</ul>\n"]
+
+        ["\n<ul>\n"] + children_html + ["</ul>\n"]
       end
 
     end

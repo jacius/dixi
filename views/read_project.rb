@@ -73,17 +73,14 @@ module Dixi
 
 
       def has_api_tree
-        not api_tree.empty?
-      end
-
-      def api_tree
-        @api_tree ||= @project.api.tree
+        not @project.api.children.empty?
       end
 
       def api_tree_html
-        htmlify_api_tree( api_tree )
+        @project.api.children.collect{ |child|
+          htmlify_api_tree( child )
+        }.join("\n")
       end
-
     end
 
   end
