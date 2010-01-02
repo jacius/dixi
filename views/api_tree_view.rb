@@ -32,11 +32,13 @@ module Dixi
         return [] if children.empty?
 
         children_html = children.collect{ |child|
-          ["<li><a href=\"#{child.url}\">#{child.basename}</a>"] +
-          [(child.type.empty? ? "" : " (#{child.type})")] +
-          walk_api_tree(child, maxdepth - 1) +
-          ["</li>\n"]
-        }.flatten
+          unless child.type =~ /method/
+            ["<li><a href=\"#{child.url}\">#{child.basename}</a>"] +
+              [(child.type.empty? ? "" : " (#{child.type})")] +
+              walk_api_tree(child, maxdepth - 1) +
+              ["</li>\n"]
+          end
+        }.flatten.compact
 
         ["\n<ul>\n"] + children_html + ["</ul>\n"]
       end
