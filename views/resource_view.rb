@@ -33,8 +33,8 @@ module Dixi
         @resource.content
       end
 
-      def raw_content
-        @resource.raw_content
+      def yaml_content
+        @resource.yaml_content
       end
 
 

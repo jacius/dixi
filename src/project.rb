@@ -28,7 +28,7 @@ module Dixi
       @host = "unknown"
       @project = self
       @content     = nil
-      @raw_content = nil
+      @yaml_content = nil
     end
 
     attr_reader :dirname, :version

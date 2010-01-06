@@ -113,26 +113,26 @@ module Dixi
 
       # Create from another instance. Used for transmuting class.
       if args[:resource]
-        other        = args[:resource]
-        @project     = other.project
-        @type        = other.type
-        @entry       = other.entry
-        @parts       = @entry.split('/')
-        @content     = nil
-        @raw_content = other.raw_content
+        other         = args[:resource]
+        @project      = other.project
+        @type         = other.type
+        @entry        = other.entry
+        @parts        = @entry.split('/')
+        @content      = nil
+        @yaml_content = other.yaml_content
 
       # Create from a project and entry
       else
-        @project     = args[:project]
-        @type        = args[:type]
-        @entry       = args[:entry]
+        @project      = args[:project]
+        @type         = args[:type]
+        @entry        = args[:entry]
         if @entry =~ SUFFIX_REGEXP
           @entry = $1
           @type  = TYPE_SUFFIXES.invert[$2]
         end
-        @parts       = @entry.split('/')
-        @content     = nil
-        @raw_content = nil
+        @parts        = @entry.split('/')
+        @content      = nil
+        @yaml_content = nil
       end
 
       if @project.nil? or @entry.nil?
@@ -149,26 +149,26 @@ module Dixi
     end
 
     def has_content?
-      filepath.exist? or (not raw_content.empty?)
+      filepath.exist? or (not yaml_content.empty?)
     rescue NoMethodError
       false
     end
 
 
-    def raw_content
-      @raw_content ||= filepath.read()
+    def yaml_content
+      @yaml_content ||= filepath.read()
     rescue Errno::ENOENT
       ""
     end
 
-    def raw_content=( raw )
-      @raw_content = raw
+    def yaml_content=( yaml )
+      @yaml_content = yaml
       @content = nil
     end
 
     def content( options={:rescue => true} )
       require 'yaml'
-      @content ||= (YAML.load(raw_content) or {})
+      @content ||= (YAML.load(yaml_content) or {})
     rescue => error
       if options[:rescue]
         {}
@@ -179,18 +179,13 @@ module Dixi
 
     def content=( content )
       @content = content
-      @raw_content = YAML.dump(content)
-    end
-
-
-    def content_as_yaml
-      raw_content
+      @yaml_content = YAML.dump(content)
     end
 
 
     def save( options={} )
       c = if options[:raw] or @content.nil?
-            @raw_content
+            @yaml_content
           else
             require 'yaml'
             YAML.dump( @content )

@@ -71,7 +71,7 @@ module Dixi
       content_type '.yaml', :charset => 'utf-8'
 
       if @resource.has_content?
-        @resource.content_as_yaml
+        @resource.yaml_content
       else
         headers( "Cache-Control" => "private" )
         error 404
@@ -85,7 +85,7 @@ module Dixi
       @resource = get_resource( @project, params[:splat][0] )
       is_new = !@resource.has_content?
 
-      @resource.raw_content = request.body.read
+      @resource.yaml_content = request.body.read
       @resource.save
 
       if is_new
@@ -148,7 +148,7 @@ module Dixi
       @project.host = request.host
       is_new = !@project.has_content?
 
-      @project.raw_content = request.POST["content"]
+      @project.yaml_content = request.POST["content"]
       @project.save
 
       if is_new
@@ -228,7 +228,7 @@ module Dixi
         redirect @parent.url_create(:overwrite => true)
 
       else
-        @resource.raw_content = request.POST["content"]
+        @resource.yaml_content = request.POST["content"]
         if request.POST["type"]
           @resource.content.merge!( "type" => request.POST["type"] )
         end
@@ -245,7 +245,7 @@ module Dixi
       @resource = get_resource( @project, params[:splat][0] )
       is_new = !@resource.has_content?
 
-      @resource.raw_content = request.POST["content"]
+      @resource.yaml_content = request.POST["content"]
       if request.POST["type"]
         @resource.content.merge!( "type" => request.POST["type"] )
       end

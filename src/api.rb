@@ -21,7 +21,7 @@ module Dixi
     def initialize( project )
       @project = project
       @entry = @parts = "api"
-      @raw_content = @content = nil
+      @yaml_content = @content = nil
     end
 
     attr_reader :project
