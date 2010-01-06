@@ -167,7 +167,6 @@ module Dixi
     end
 
     def content( options={:rescue => true} )
-      require 'yaml'
       @content ||= (YAML.load(yaml_content) or {})
     rescue => error
       if options[:rescue]
@@ -187,7 +186,6 @@ module Dixi
       c = if options[:raw] or @content.nil?
             @yaml_content
           else
-            require 'yaml'
             YAML.dump( @content )
           end
 

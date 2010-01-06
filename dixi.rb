@@ -24,6 +24,7 @@ $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
 require 'src/uri'
 
+autoload :YAML, 'yaml'
 
 module Dixi
 
