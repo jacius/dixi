@@ -121,6 +121,21 @@ module Dixi
         @content      = nil
         @yaml_content = other.yaml_content
 
+      # Create from a project and filepath
+      elsif args[:filepath]
+        @project      = args[:project]
+        @filepath     = args[:filepath]
+        @type         = args[:type]
+        @parts        = @filepath.relative_path_from(@project.version_dir).
+                          sub_ext("").to_s.split(File::SEPARATOR)
+        @entry        = @parts.join("/")
+        if @entry =~ SUFFIX_REGEXP
+          @entry = $1
+          @type  = TYPE_SUFFIXES.invert[$2]
+        end
+        @content      = nil
+        @yaml_content = nil
+
       # Create from a project and entry
       else
         @project      = args[:project]
@@ -144,8 +159,8 @@ module Dixi
 
 
     def filepath
-      Pathname.new(@project.version_dir.join(*@parts).to_s +
-                   type_suffix + ".yaml")
+      @filepath || Pathname.new(@project.version_dir.join(*@parts).to_s +
+                                type_suffix + ".yaml")
     end
 
     def has_content?
