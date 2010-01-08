@@ -104,10 +104,19 @@ module Dixi
     end
 
 
-    # Example for URL "/rubygame/2.6.2/api/Rubygame/Surface/blit"
+    # Create a Resource from an args hash. The meaningful args are:
     # 
-    # project::  Dixi::Project.new("rubygame", "2.6.2")
-    # entry::    "api/Rubygame/Surface/blit"
+    # :project::  Dixi::Project that this resource belongs to.
+    # :type::     The resource's type, e.g. "instance method".
+    # :resource:: An existing Resource. Used for transmuting class.
+    # :filepath:: Absolute Pathname to the resource's YAML file.
+    # :entry::    The resource ID, e.g. "api/Rubygame/Surface/blit-im"
+    # 
+    # You must provide :project, plus one of :resource, :filepath, or
+    # :entry.
+    # 
+    # :type is optional, and may be ignored if the resource already
+    # has a defined type.
     # 
     def initialize( args={} )
 
