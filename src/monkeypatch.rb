@@ -20,10 +20,23 @@
 require 'uri'
 
 class URI::Generic
-  def join( *args )
+
+  # Append the given string(s) to this URI, separated by "/", in
+  # the simple and expected way. "mp" stands for "monkey patch".
+  # 
+  #   uri = URI.parse("http://github.com")
+  #   uri.mp_join("jacius","dixi")
+  #   # => URL:http://github.com/jacius/dixi
+  # 
+  #   # Works with a trailing slash, too:
+  #   uri = URI.parse("http://github.com/")
+  #   uri.mp_join("jacius","dixi")
+  #   # => URL:http://github.com/jacius/dixi
+  # 
+  def mp_join( *strings )
     s = self.to_s
     s.slice!(-1) if s[-1] == ?/
-    URI.parse( args.unshift(s).join('/') )
+    URI.parse( strings.unshift(s).join('/') )
   end
 end
 

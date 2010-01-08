@@ -298,12 +298,12 @@ module Dixi
 
     def url( extra="" )
       e = Rack::Utils.escape(@entry).gsub("%2F","/")
-      @project.version_url.join(e).to_s + type_suffix + extra
+      @project.version_url.mp_join(e).to_s + type_suffix + extra
     end
 
     def url_read
       e = Rack::Utils.escape(@entry).gsub("%2F","/")
-      @project.version_url.join(e).to_s
+      @project.version_url.mp_join(e).to_s
     end
 
     def url_read_yaml

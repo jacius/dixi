@@ -81,11 +81,11 @@ module Dixi
 
 
     def url( extra="" )
-      Dixi.url_base.join(@dirname).to_s + extra
+      Dixi.url_base.mp_join(@dirname).to_s + extra
     end
 
     def version_url
-      Dixi.url_base.join(@dirname, @version.to_s)
+      Dixi.url_base.mp_join(@dirname, @version.to_s)
     end
 
 

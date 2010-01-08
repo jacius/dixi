@@ -35,7 +35,7 @@ module Dixi
     end
 
     def url
-      @project.version_url.join("api")
+      @project.version_url.mp_join("api")
     end
 
     def type
