@@ -22,7 +22,7 @@ require 'mustache/sinatra'
 
 $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
-require 'src/uri'
+require 'src/monkeypatch'
 
 autoload :YAML, 'yaml'
 
