@@ -20,11 +20,28 @@
 require 'uri'
 
 class URI::Generic
-
   def join( *args )
     s = self.to_s
     s.slice!(-1) if s[-1] == ?/
     URI.parse( args.unshift(s).join('/') )
+  end
+end
+
+
+# And Pathname! I'm so evil!
+
+require 'pathname'
+
+class Pathname
+
+  # Simply append a string to the Pathname. Nothing fancy.
+  # "mp" stands for "monkey patch".
+  # 
+  #   p = Pathname.new("foo")
+  #   p.mp_append("bar.txt")   # Pathname:foobar.txt
+  # 
+  def mp_append( str )
+    self.class.new( to_s + str.to_s )
   end
 
 end
