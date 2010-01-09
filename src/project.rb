@@ -71,12 +71,12 @@ module Dixi
     end
 
     # Create a new Resource for this project
-    def resource( entry )
-      Dixi::Resource.make( :project => self, :entry => entry )
+    def resource( id )
+      Dixi::Resource.make( :project => self, :id => id )
     end
 
-    def matching( entry, type=nil )
-      Dixi::Resource.matching( self, entry, type )
+    def matching( id )
+      Dixi::Resource.matching( self, id )
     end
 
 

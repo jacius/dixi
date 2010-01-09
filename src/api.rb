@@ -20,7 +20,7 @@ module Dixi
 
     def initialize( project )
       @project = project
-      @entry = @parts = "api"
+      @id = @parts = "api"
       @yaml_content = @content = nil
     end
 

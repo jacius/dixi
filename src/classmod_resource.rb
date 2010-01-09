@@ -98,16 +98,16 @@ module Dixi
     private
 
     def construct_classmod( name )
-      entry = "api/" + name.split(/\/|::|\.|#/).join("/")
+      id = "api/" + name.split(/\/|::|\.|#/).join("/")
       Dixi::ClassmodResource.new( :project => @project,
-                                  :entry => entry,
+                                  :id => id,
                                   :name => name )
     end
 
     def construct_method( name )
-      entry = "api/" + name.split(/\/|::|\.|#/).join("/")
+      id = "api/" + name.split(/\/|::|\.|#/).join("/")
       Dixi::MethodResource.new( :project => @project,
-                                :entry => entry,
+                                :id => id,
                                 :name => name )
     end
 

@@ -45,42 +45,39 @@ module Dixi
     # Group 3 will be ".yaml" or nil.
     SUFFIX_REGEXP = /(.*)(-(?:im|cm|mm|c|m))(\.yaml)?$/
 
+    # Same as SUFFIX_REGEXP, but the type suffix is optional.
+    OPT_SUFFIX_REGEXP = /(.*)(-(?:im|cm|mm|c|m))?(\.yaml)?$/
 
-    # Returns all existing resources in the project that match the
-    # given entry, or an empty Array if no resources match.
+
+    # Takes a resource ID with no type, and returns all existing
+    # resources in the project that match that ID, or an empty Array
+    # if no resources match. For example, if the ID was "api/foo", it
+    # would match both "api/foo-cm" and "api/foo-im".
     # 
-    # If type is specified, only resources of that type (checked by
-    # type suffix in the filename) will match. There will always be
-    # either zero or one result in this case, because there cannot be
-    # more than one resource with the same entry and type.
+    # If id has a type suffix or .yaml file extension, they are ignored.
     # 
-    def self.matching( project, entry, type=nil )
-      Dixi.logger.info( "Resource.matching( project=#{project.inspect}, " +
-                        "entry=#{entry.inspect}, type=#{type.inspect} )" )
+    def self.matching( project, id )
+      Dixi.logger.info( "Resource.matching( " +
+                        "project=#{project.inspect}, " +
+                        "id=#{id.inspect} )" )
 
-      suffix =
-        if SUFFIX_REGEXP =~ entry
-          Dixi.logger.info( "#{entry} already has suffix: #{$2.inspect}" )
-          ""
-        else
-          TYPE_SUFFIXES[type] || "*"
-        end
+      # Ignore type suffix or .yaml file extension
+      if SUFFIX_REGEXP =~ id
+        id = $1
+      end
 
-      suffix += ".yaml" unless entry =~ /\.yaml$/
+      pathglob = project.version_dir.join( *id.split("/") ).to_s + "-*"
 
-      pathglob = project.version_dir.join(*entry.split("/")).to_s + suffix
-      Dixi.logger.info( "#{entry}'s pathglob is #{pathglob.inspect}" )
+      Dixi.logger.info( "#{id}'s pathglob is #{pathglob.inspect}" )
 
-      Pathname.glob( pathglob ).collect do |filepath|
+      Pathname.glob( pathglob ).collect { |filepath|
         unless filepath.directory?
           Dixi.logger.info( "Found #{filepath}." )
-
-          suf = (SUFFIX_REGEXP =~ filepath.to_s) ? $2 : ""
-          make( :project  => project,
-                :entry    => entry + suf,
-                :type     => type )
+          path = filepath.relative_path_from( project.version_dir )
+          m = OPT_SUFFIX_REGEXP.match( path.to_s )
+          project.resource( m[1]+m[2].to_s )
         end
-      end.compact
+      }.compact
     end
 
 
@@ -109,11 +106,12 @@ module Dixi
     # :project::  Dixi::Project that this resource belongs to.
     # :type::     The resource's type, e.g. "instance method".
     # :resource:: An existing Resource. Used for transmuting class.
-    # :filepath:: Absolute Pathname to the resource's YAML file.
-    # :entry::    The resource ID, e.g. "api/Rubygame/Surface/blit-im"
+    # :id::       The resource ID, e.g. "api/Rubygame/Surface/blit-im"
+    #             Partial (untyped) IDs are not supported. So
+    #             "api/Rubygame/Surface/blit" is WRONG. Use
+    #             Resource.find if you have a partial ID.
     # 
-    # You must provide :project, plus one of :resource, :filepath, or
-    # :entry.
+    # You must provide :project, plus either :resource or :id.
     # 
     # :type is optional, and may be ignored if the resource already
     # has a defined type.
@@ -122,76 +120,82 @@ module Dixi
 
       # Create from another instance. Used for transmuting class.
       if args[:resource]
-        other         = args[:resource]
-        @project      = other.project
-        @type         = other.type
-        @entry        = other.entry
-        @parts        = @entry.split('/')
-        @content      = nil
-        @yaml_content = other.yaml_content
+        other    = args[:resource]
+        @project = other.project
+        @type    = other.type
+        @id      = other.id
+        @content = other.content(:load => false)
+        @yaml    = other.yaml_content(:load => false)
 
-      # Create from a project and filepath
-      elsif args[:filepath]
-        @project      = args[:project]
-        @filepath     = args[:filepath]
-        @type         = args[:type]
-        @parts        = @filepath.relative_path_from(@project.version_dir).
-                          sub_ext("").to_s.split(File::SEPARATOR)
-        @entry        = @parts.join("/")
-        if @entry =~ SUFFIX_REGEXP
-          @entry = $1
-          @type  = TYPE_SUFFIXES.invert[$2]
-        end
-        @content      = nil
-        @yaml_content = nil
-
-      # Create from a project and entry
+      # Create from a project and id
       else
-        @project      = args[:project]
-        @type         = args[:type]
-        @entry        = args[:entry]
-        if @entry =~ SUFFIX_REGEXP
-          @entry = $1
-          @type  = TYPE_SUFFIXES.invert[$2]
+        @project = args[:project]
+        @type    = args[:type]
+        @id      = args[:id]
+        if SUFFIX_REGEXP =~ @id
+          suffix = $2
+          @id    = $1 + suffix
+          @type  = TYPE_SUFFIXES.invert[suffix]
         end
-        @parts        = @entry.split('/')
-        @content      = nil
-        @yaml_content = nil
+        @content = nil
+        @yaml    = nil
       end
 
-      if @project.nil? or @entry.nil?
+      if @project.nil? or @id.nil?
         raise ArgumentError, "Insufficient resource args: #{args.inspect}"
       end
     end
 
-    attr_reader :project, :entry
+    attr_reader :project, :id
 
+
+    def inspect
+      "#<#{self.class} #{name.inspect}>"
+    end
+
+
+    def exist?
+      filepath.exist?
+    end
 
     def filepath
-      @filepath || Pathname.new(@project.version_dir.join(*@parts).to_s +
-                                type_suffix + ".yaml")
+      @filepath || 
+        @project.version_dir.join(*split_id(@id)).mp_append(".yaml")
     end
 
     def has_content?
-      filepath.exist? or (not yaml_content.empty?)
+      exist? or (not yaml_content.empty?)
     rescue NoMethodError
       false
     end
 
 
-    def yaml_content
-      @yaml_content ||= filepath.read()
+    def yaml_content( options={:load => true} )
+      options = {:load => true}.merge( options )
+
+      if options[:load]
+        @yaml ||= filepath.read()
+      else
+        @yaml
+      end
     rescue Errno::ENOENT
       ""
     end
 
     def yaml_content=( yaml )
-      @yaml_content = yaml
+      @yaml = yaml
       @content = nil
     end
 
-    def content( options={:rescue => true} )
-      @content ||= (YAML.load(yaml_content) or {})
+
+    def content( options={:rescue => true, :load => true} )
+      options = {:rescue => true, :load => true}.merge( options )
+
+      if options[:load]
+        @content ||= (YAML.load(yaml_content) or {})
+      else
+        @content
+      end
     rescue => error
       if options[:rescue]
         {}
@@ -202,13 +206,13 @@ module Dixi
 
     def content=( content )
       @content = content
-      @yaml_content = YAML.dump(content)
+      @yaml = YAML.dump(content)
     end
 
 
     def save( options={} )
       c = if options[:raw] or @content.nil?
-            @yaml_content
+            @yaml
           else
             YAML.dump( @content )
           end
@@ -228,11 +232,11 @@ module Dixi
 
 
     def name
-      @project.dirname_and_version + "/" + @entry
+      @project.dirname_and_version + "/" + @id
     end
 
     def basename
-      @parts[-1]
+      split_id(id_no_suffix)[-1]
     end
 
 
@@ -248,17 +252,9 @@ module Dixi
       @type = content["type"] = new_type
     end
 
-    def type_suffix
-      if @entry =~ SUFFIX_REGEXP
-        "" # already has a suffix
-      else
-        TYPE_SUFFIXES[type] || ""
-      end
-    end
-
 
     def child( name )
-      @project.resource( @entry + "/" + name )
+      @project.resource( id_no_suffix + "/" + name )
     end
 
 
@@ -272,7 +268,7 @@ module Dixi
       # Generate a pathname for a possible directory corresponding to
       # this resource. E.g. the directory for "api/Rubygame-m" is
       # "api/Rubygame/" (type suffix is discarded).
-      dir = @project.version_dir.join(*@parts)
+      dir = @project.version_dir.join( *split_id(id_no_suffix) )
 
       # No directory means no children.
       return [] unless dir.directory?
@@ -280,29 +276,33 @@ module Dixi
       # Create resources for all the YAML files and subdirectories
       # within this resource's directory.
       dir.children.sort.collect { |path|
-        entry = path.relative_path_from(@project.version_dir).to_s
-        entry = entry.split(File::SEPARATOR).join("/")
+        child_id = path.relative_path_from(@project.version_dir).to_s
+        child_id = child_id.split(File::SEPARATOR).join("/")
 
         if path.directory?
           # If it's a directory and it doesn't have a matching YAML
           # file, create a generic resource to represent it.
-          if @project.matching(entry).empty?
-            @project.resource( entry )
+          if @project.matching( child_id ).empty?
+            @project.resource( child_id )
           end
-        elsif SUFFIX_REGEXP =~ entry.to_s
-          @project.resource( entry )
+        elsif SUFFIX_REGEXP =~ child_id.to_s
+          @project.resource( child_id )
         end
       }.compact
     end
 
 
+    #--
+    # URLS
+    #++
+
     def url( extra="" )
-      e = Rack::Utils.escape(@entry).gsub("%2F","/")
-      @project.version_url.mp_join(e).to_s + type_suffix + extra
+      e = Rack::Utils.escape(@id).gsub("%2F","/")
+      @project.version_url.mp_join(e).to_s + extra
     end
 
     def url_read
-      e = Rack::Utils.escape(@entry).gsub("%2F","/")
+      e = Rack::Utils.escape(id_no_suffix).gsub("%2F","/")
       @project.version_url.mp_join(e).to_s
     end
 
@@ -327,6 +327,10 @@ module Dixi
     end
 
 
+    #--
+    # TEMPLATES
+    #++
+
     def template_read
       :read_resource
     end
@@ -344,9 +348,20 @@ module Dixi
     end
 
 
-    def inspect
-      "#<#{self.class} #{name.inspect}>"
+    private
+
+    def split_id( id )
+      id.split("/")
     end
+
+    def id_no_suffix
+      if SUFFIX_REGEXP =~ @id
+        $1
+      else
+        @id
+      end
+    end
+
 
   end
 

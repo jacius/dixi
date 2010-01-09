@@ -33,7 +33,7 @@ module Dixi
 
         children_html = children.collect{ |child|
           unless child.type =~ /method/
-            ["<li><a href=\"#{child.url}\">#{child.basename}</a>"] +
+            ["<li><a href=\"#{child.url_read}\">#{child.basename}</a>"] +
               [(child.type.empty? ? "" : " (#{child.type})")] +
               walk_api_tree(child, maxdepth - 1) +
               ["</li>\n"]

@@ -39,8 +39,8 @@ module Dixi
       end
 
 
-      def get_resource( project, entry, type=nil )
-        project.matching(entry, type).first or project.resource(entry)
+      def get_resource( project, id )
+        project.matching(id).first or project.resource(id)
       end
 
 
