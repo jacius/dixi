@@ -210,6 +210,18 @@ module Dixi
     end
 
 
+    # Dump important resource data as a Hash for the index.
+    def index_dump
+      { id => {
+          "name"     => name,
+          "file"     => filepath.relative_path_from(Dixi.contents_dir).to_s,
+          "type"     => type,
+          "children" => children.collect{ |c| c.id },
+        }
+      }
+    end
+
+
     def save( options={} )
       c = if options[:raw] or @content.nil?
             @yaml

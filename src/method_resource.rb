@@ -61,6 +61,13 @@ module Dixi
     end
 
 
+    def index_dump
+      hash = super
+      hash[id].merge!( "synopsis" => synopsis ) unless synopsis.empty?
+      hash
+    end
+
+
     def template_read
       :read_method
     end
