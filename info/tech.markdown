@@ -95,6 +95,57 @@ method "-" would be "--im.yaml". However some puncuation will be
 escaped in URIs. See the section below.
 
 
+Index
+-----
+
+Dixi maintains an "index" for each version of each project. The index
+is a list of all the resources in that version of the project, with
+certain data about the resource, such as its name, type, and synopsis.
+
+The purpose of the index is to improve performance by reducing the
+number of files that need to be accessed when handling each request.
+Instead of loading each resource from disk to find its synopsis (for
+example), the index can be loaded once to find the synopses of all
+resources.
+
+The index is maintained in "index.yaml" within the project version
+directory (e.g. ("contents/rubygame/2.6.2/index.yaml"). The index is a
+mapping (hash table), with each key being the resource ID, and each
+value being a mapping of the resource's relevant data.
+
+The index is updated whenever a resource is changed.
+
+A simple example index:
+
+    ---
+    api/Rubygame-m:
+      file: rubygame/2.6.2/api/Rubygame-m.yaml
+      name: Rubygame
+      type: module
+      synopsis:
+        Top level module for Rubygame.
+      children:
+        - api/Rubygame/Surface-c
+
+    api/Rubygame/Surface-c:
+      file: rubygame/2.6.2/api/Rubygame/Surface-c.yaml
+      name: Rubygame::Surface
+      type: class
+      synopsis:
+        Surface represents an image, a block of colored pixels
+        arranged in a 2D grid.
+      children:
+        - api/Rubygame/Surface/blit-im
+
+    api/Rubygame/Surface/blit-im:
+      file: rubygame/2.6.2/api/Rubygame/Surface/blit-im.yaml
+      name: Rubygame::Surface#blit
+      type: instance method
+      synopsis:
+        Blit (copy) all or part of the Surface's image to
+        another Surface.
+
+
 Web Interface
 -------------
 
