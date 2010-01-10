@@ -224,6 +224,20 @@ module Dixi
       @index.project.resource( @id )
     end
 
+
+    def children
+      @index.find_all{ |entry|
+        entry.id =~ /^#{id_no_suffix}\/[^\/]+$/
+      }
+    end
+
+
+    private
+
+    def id_no_suffix
+      Resource::OPT_SUFFIX_REGEXP.match(@id)[1]
+    end
+
   end
 
 end

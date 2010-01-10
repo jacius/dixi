@@ -226,7 +226,6 @@ module Dixi
           "name"     => name,
           "file"     => filepath.relative_path_from(Dixi.contents_dir).to_s,
           "type"     => type,
-          "children" => children.collect{ |c| c.id },
         }
       }
     end
@@ -292,12 +291,8 @@ module Dixi
     # example, "api/Rubygame/Surface" is a child of "api/Rubygame".
     # 
     def children
-      entry = index_entry
-      if entry and entry["children"]
-        entry["children"].collect{ |child_id|  @project.resource(child_id) }
-      else
-        []
-      end
+      ie = index_entry
+      ie.children.collect{ |child| child.resource } if ie
     end
 
 

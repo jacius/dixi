@@ -124,8 +124,6 @@ A simple example index:
       type: module
       synopsis:
         Top level module for Rubygame.
-      children:
-        - api/Rubygame/Surface-c
 
     api/Rubygame/Surface-c:
       file: rubygame/2.6.2/api/Rubygame/Surface-c.yaml
@@ -134,8 +132,6 @@ A simple example index:
       synopsis:
         Surface represents an image, a block of colored pixels
         arranged in a 2D grid.
-      children:
-        - api/Rubygame/Surface/blit-im
 
     api/Rubygame/Surface/blit-im:
       file: rubygame/2.6.2/api/Rubygame/Surface/blit-im.yaml
