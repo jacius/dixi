@@ -58,6 +58,15 @@ module Dixi
   end
 
 
+  def self.projects
+    contents_dir.children.collect { |child|
+      if child.directory? and not child.basename == ".git"
+        Dixi::Project.new( child.basename )
+      end
+    }.compact
+  end
+
+
   class App < Sinatra::Base
     use Rack::MethodOverride
 

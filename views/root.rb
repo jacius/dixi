@@ -24,19 +24,11 @@ module Dixi
       include Dixi::Views::APITreeView
 
       def has_projects
-        not projects.empty?
-      end
-
-      def projects
-        @projects ||= Dixi.contents_dir.children.collect { |child|
-          if child.directory? and not child.basename == ".git"
-            Dixi::Project.new( child.basename )
-          end
-        }.compact
+        not Dixi.projects.empty?
       end
 
       def projects_hashed
-        projects.collect { |project|
+        Dixi.projects.collect { |project|
           children = project.api.children
           children_html = children.collect{ |child|
             htmlify_api_tree( child )
