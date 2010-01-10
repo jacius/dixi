@@ -46,7 +46,7 @@ module Dixi
     SUFFIX_REGEXP = /(.*)(-(?:im|cm|mm|c|m))(\.yaml)?$/
 
     # Same as SUFFIX_REGEXP, but the type suffix is optional.
-    OPT_SUFFIX_REGEXP = /(.*)(-(?:im|cm|mm|c|m))?(\.yaml)?$/
+    OPT_SUFFIX_REGEXP = /(.*?)(-(?:im|cm|mm|c|m))?(\.yaml)?$/
 
 
     # Takes a resource ID with no type, and returns all existing
