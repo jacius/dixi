@@ -30,6 +30,7 @@ module Dixi
 
   autoload :Project,  'src/project'
   autoload :Version,  'src/version'
+  autoload :Index,    'src/index'
   autoload :API,      'src/api'
   autoload :Resource, 'src/resource'
   autoload :Helpers,  'src/helpers'
