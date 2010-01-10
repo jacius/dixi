@@ -81,6 +81,16 @@ module Dixi
     end
 
 
+    # Create a Resource for the given filepath. Filepath must be an
+    # absolute Pathname to a resource YAML file.
+    # 
+    def self.from_filepath( project, filepath )
+      filepath = filepath.relative_path_from( project.version_dir )
+      id = filepath.sub_ext("").to_s.split(File::SEPARATOR).join("/")
+      make( :project => project, :id => id )
+    end
+
+
     # Create an appropriate resource instance based on the content
     # type. E.g. if type is "module", makes a ModuleResource.
     # If there's no type match, just returns a Resource.
