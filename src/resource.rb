@@ -86,7 +86,7 @@ module Dixi
     # 
     def self.from_filepath( project, filepath )
       filepath = filepath.relative_path_from( project.version_dir )
-      id = filepath.sub_ext("").to_s.split(File::SEPARATOR).join("/")
+      id = filepath.mp_no_ext.to_s.split(File::SEPARATOR).join("/")
       make( :project => project, :id => id )
     end
 
