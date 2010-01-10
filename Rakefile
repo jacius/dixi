@@ -25,6 +25,26 @@ task :capconfig do
 end
 
 
+
+desc "Generate indexes for all projects."
+task :index do
+  require 'dixi'
+  Dixi.projects.each do |project|
+    project.all_versions.each do |version|
+      p = project.at_version( version )
+      print "Generating index for #{project.name} #{version}... "
+      begin
+        i = Dixi::Index.new( p )
+        i.generate
+        puts "Done. (#{i.size} entries)"
+      rescue => e
+        puts "ERROR: #{e}"
+      end
+    end
+  end
+end
+
+
 #########
 # SPECS #
 #########
