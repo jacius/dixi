@@ -20,4 +20,26 @@ describe Pathname do
     path.should == Pathname.new("foobar.txt")
   end
 
+
+  describe "mp_no_ext" do
+
+    it "should take exactly zero args" do
+      lambda{ Pathname.new("foo").mp_no_ext     }.should_not raise_error
+      lambda{ Pathname.new("foo").mp_no_ext("") }.should raise_error
+    end
+
+    it "should return a Pathname" do
+      Pathname.new("foo").mp_no_ext.should be_instance_of Pathname
+    end
+
+    it "should remove the filename extension" do
+      Pathname.new("foo.txt").mp_no_ext.should == Pathname.new("foo")
+    end
+
+    it "should do nothing if there is no filename extension" do
+      Pathname.new("foo").mp_no_ext.should == Pathname.new("foo")
+    end
+
+  end
+
 end

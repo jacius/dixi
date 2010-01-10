@@ -48,13 +48,31 @@ require 'pathname'
 class Pathname
 
   # Simply append a string to the Pathname. Nothing fancy.
-  # "mp" stands for "monkey patch".
+  # Returns the new Pathname. "mp" stands for "monkey patch".
   # 
   #   p = Pathname.new("foo")
   #   p.mp_append("bar.txt")   # Pathname:foobar.txt
   # 
   def mp_append( str )
     self.class.new( to_s + str.to_s )
+  end
+
+
+  # Remove the file extension from the Pathname, if it has one.
+  # Returns the new Pathname. "mp" stands for "monkey patch".
+  # 
+  #   p = Pathname.new("a.txt")
+  #   p.mp_no_ext                  # Pathname:a
+  # 
+  #   p2 = Pathname.new("b")
+  #   p2.mp_no_ext                 # Pathname:b
+  # 
+  def mp_no_ext
+    if extname.empty?
+      self
+    else
+      Pathname.new( to_s.sub(Regexp.new(extname+"$"), "") )
+    end
   end
 
 end
