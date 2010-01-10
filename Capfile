@@ -52,4 +52,5 @@ end
 
 after :deploy do
   run "ln -s #{shared_path}/contents #{release_path}/contents"
+  run "cd #{release_path} && rake index"
 end
