@@ -70,6 +70,10 @@ module Dixi
       @api ||= Dixi::API.new(self)
     end
 
+    def index
+      @index ||= Dixi::Index.new(self)
+    end
+
     # Create a new Resource for this project
     def resource( id )
       Dixi::Resource.make( :project => self, :id => id )
@@ -114,9 +118,9 @@ module Dixi
     end
 
 
-    # Add the files to the index (staging area), to be committed
-    # next time #commit is called. Used for both adding new files
-    # and replacing the contents of an existing file.
+    # Add the files to the git staging area, to be committed next time
+    # #commit is called. Used for both adding new files and replacing
+    # the contents of an existing file.
     # 
     # paths is one or more absolute paths (as strings or Pathnames)
     # to files to add.
@@ -127,8 +131,8 @@ module Dixi
       end
     end
 
-    # Remove the files to the index (staging area), to be committed
-    # next time #commit is called.
+    # Remove the files to the git staging area, to be committed next
+    # time #commit is called.
     # 
     # paths is one or more absolute paths (as strings or Pathnames)
     # to files to remove.
