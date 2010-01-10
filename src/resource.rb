@@ -231,6 +231,11 @@ module Dixi
       }
     end
 
+    # Returns an Index::Entry for this resource.
+    def index_entry
+      @project.index[@id]
+    end
+
 
     def save( options={} )
       c = if options[:raw] or @content.nil?
