@@ -292,30 +292,12 @@ module Dixi
     # example, "api/Rubygame/Surface" is a child of "api/Rubygame".
     # 
     def children
-      # Generate a pathname for a possible directory corresponding to
-      # this resource. E.g. the directory for "api/Rubygame-m" is
-      # "api/Rubygame/" (type suffix is discarded).
-      dir = @project.version_dir.join( *split_id(id_no_suffix) )
-
-      # No directory means no children.
-      return [] unless dir.directory?
-
-      # Create resources for all the YAML files and subdirectories
-      # within this resource's directory.
-      dir.children.sort.collect { |path|
-        child_id = path.relative_path_from(@project.version_dir).to_s
-        child_id = child_id.split(File::SEPARATOR).join("/")
-
-        if path.directory?
-          # If it's a directory and it doesn't have a matching YAML
-          # file, create a generic resource to represent it.
-          if @project.matching( child_id ).empty?
-            @project.resource( child_id )
-          end
-        elsif SUFFIX_REGEXP =~ child_id.to_s
-          @project.resource( child_id )
-        end
-      }.compact
+      entry = index_entry
+      if entry and entry["children"]
+        entry["children"].collect{ |child_id|  @project.resource(child_id) }
+      else
+        []
+      end
     end
 
 
