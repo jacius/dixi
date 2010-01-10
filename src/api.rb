@@ -30,6 +30,14 @@ module Dixi
       @project.name
     end
 
+    def children
+      @project.index.find_all{ |entry|
+        entry.id =~ Regexp.new("^api/[^/]+$")
+      }.collect{ |entry|
+        entry.resource
+      }
+    end
+
     def dir
       @project.version_dir.join("api")
     end
