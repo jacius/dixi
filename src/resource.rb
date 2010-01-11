@@ -66,7 +66,7 @@ module Dixi
         id = $1
       end
 
-      pathglob = project.version_dir.join( *id.split("/") ).to_s + "-*"
+      pathglob = project.version_dir.mp_join( *id.split("/") ).to_s + "-*"
 
       Dixi.logger.info( "#{id}'s pathglob is #{pathglob.inspect}" )
 
@@ -170,7 +170,7 @@ module Dixi
 
     def filepath
       @filepath ||=
-        @project.version_dir.join(*split_id(@id)).mp_append(".yaml")
+        @project.version_dir.mp_join(*split_id(@id)).mp_append(".yaml")
     end
 
     def has_content?

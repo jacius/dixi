@@ -182,7 +182,7 @@ module Dixi
     end
 
     def filepath
-      @project.version_dir.join("index.yaml")
+      @project.version_dir.mp_join("index.yaml")
     end
 
     def load

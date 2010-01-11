@@ -53,16 +53,16 @@ module Dixi
     end
 
     def dir
-      @dir ||= Dixi.contents_dir.join(@dirname)
+      @dir ||= Dixi.contents_dir.mp_join(@dirname)
     end
 
     def version_dir
-      @version_dir ||= dir.join(@version.to_s)
+      @version_dir ||= dir.mp_join(@version.to_s)
     end
 
     def filepath
       # e.g. "/rubygame/project.yaml"
-      dir.join("project.yaml")
+      dir.mp_join("project.yaml")
     end
 
 
@@ -170,7 +170,7 @@ module Dixi
     def new_git_repo
       # Init the repo as a bare repo (because Grit::Repo can't init
       # non-bare repos yet), then make it non-bare.
-      @repo = Grit::Repo.init_bare( dir.join(".git").to_s )
+      @repo = Grit::Repo.init_bare( dir.mp_join(".git").to_s )
       @repo.config["core.bare"] = "false"
       @repo.config["core.logallrefupdates"]  = "true"
 

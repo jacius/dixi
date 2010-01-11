@@ -39,7 +39,7 @@ module Dixi
     end
 
     def dir
-      @project.version_dir.join("api")
+      @project.version_dir.mp_join("api")
     end
 
     def url
