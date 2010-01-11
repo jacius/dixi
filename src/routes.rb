@@ -94,6 +94,8 @@ module Dixi
         @project.git_commit( "Edited #{request.path_info} as YAML" )
       end
 
+      @project.index.save
+
       headers["Location"] = @resource.url_read_yaml
       headers["Cache-Control"] = "private"
       content_type '.yaml', :charset => 'utf-8'
@@ -113,6 +115,8 @@ module Dixi
 
       @resource.delete
       @project.git_commit( "Deleted #{request.path_info}" )
+
+      @project.index.save
 
       headers["Location"] = @resource.url_read_yaml
       headers["Cache-Control"] = "private"
@@ -156,6 +160,8 @@ module Dixi
       else
         @project.git_commit( "Edited #{request.path_info}" )
       end
+
+      @project.index.save
 
       redirect @project.url_read
     end
@@ -234,6 +240,7 @@ module Dixi
         end
         @resource.save
         @project.git_commit( "Created /#{@resource.name}" )
+        @project.index.save
         redirect @resource.url_read
       end
     end
@@ -257,6 +264,8 @@ module Dixi
         @project.git_commit( "Edited #{request.path_info}" )
       end
 
+      @project.index.save
+
       redirect @resource.url_read
     end
 
@@ -268,6 +277,8 @@ module Dixi
 
       @resource.delete
       @project.git_commit( "Deleted #{request.path_info}" )
+
+      @project.index.save
 
       redirect @resource.url_read
     end

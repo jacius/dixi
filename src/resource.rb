@@ -248,11 +248,13 @@ module Dixi
         f << c.to_s
       end
 
+      @project.index.add( self )
       @project.git_add( filepath )
     end
 
 
     def delete
+      @project.index.delete( id )
       @project.git_remove( filepath )
     end
 
