@@ -58,6 +58,14 @@ class Pathname
   end
 
 
+  # Like Pathname#join, but simpler and much faster.
+  # "mp" stands for "monkey patch".
+  # 
+  def mp_join( *strings )
+    self.class.new( File.join(to_s, *strings) )
+  end
+
+
   # Remove the file extension from the Pathname, if it has one.
   # Returns the new Pathname. "mp" stands for "monkey patch".
   # 
