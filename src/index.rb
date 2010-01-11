@@ -228,7 +228,7 @@ module Dixi
     def children
       @index.find_all{ |entry|
         entry.id =~ /^#{id_no_suffix}\/[^\/]+$/
-      }
+      }.sort{ |a,b| a.id <=> b.id }
     end
 
 
