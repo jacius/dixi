@@ -1,4 +1,7 @@
 
+$LOAD_PATH.unshift ::File.join(::File.dirname(__FILE__), "vendor")
+
+
 # Comment this out if you don't want rubygems:
 require 'rubygems'
 
