@@ -222,10 +222,13 @@ module RIDumper
 
     # Dumps a RDoc::RI::Attribute as a Hash for Dixi.
     def dump_attribute( attr )
-      { "name" => attr.name,
-        "rw"   => attr.rw,
-        "info" => dump_markup( attr.comment ),
-      }
+      hash = { "name" => attr.name }
+      hash.merge!( "read"  => true ) if attr.rw =~ /R/
+      hash.merge!( "write" => true ) if attr.rw =~ /W/
+      if attr.comment and !attr.comment.empty?
+        hash.merge!( "info"  => dump_markup(attr.comment) )
+      end
+      hash
     end
 
 
