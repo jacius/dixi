@@ -39,6 +39,14 @@ TYPE_SUFFIXES = {
 }
 
 
+unless Object.new.respond_to? :tap
+  def Object.tap( &block )
+    yield self if block_given?
+    self
+  end
+end
+
+
 def main
   options = handle_options
   options[:input].each{ |dir|  process_dir(dir, options[:output]) }
@@ -189,6 +197,12 @@ module RIDumper
         "cmethods"  => cm.class_methods.collect{ |meth|
           cm.full_name + "." + meth.name
         },
+      }.tap{ |h|
+        h.delete("constants") if h["constants"].empty?
+        h.delete("includes" ) if h["includes" ].empty?
+        h.delete("details"  ) if h["details"  ].empty?
+        h.delete("imethods" ) if h["imethods" ].empty?
+        h.delete("cmethods" ) if h["cmethods" ].empty?
       }
     end
 
@@ -198,8 +212,11 @@ module RIDumper
       dump_classmod_desc( klass ).merge({
         "type"       => "class",
         "attributes" => klass.attributes.collect{ |a| dump_ri(a) },
-        "base"       => klass.superclass
-      })
+        "base"       => klass.superclass,
+      }).tap{ |h|
+        h.delete("attributes") if h["attributes"].empty?
+        h.delete("base") if h["base"] == "Object"
+      }
     end
 
 
@@ -216,19 +233,24 @@ module RIDumper
       { "name"  => const.name,
         "value" => const.value,
         "info"  => dump_markup( const.comment ),
+      }.tap{ |h|
+        h.delete("value") if h["value"].empty?
+        h.delete("info" ) if h["info" ].empty?
       }
     end
 
 
     # Dumps a RDoc::RI::Attribute as a Hash for Dixi.
     def dump_attribute( attr )
-      hash = { "name" => attr.name }
-      hash.merge!( "read"  => true ) if attr.rw =~ /R/
-      hash.merge!( "write" => true ) if attr.rw =~ /W/
-      if attr.comment and !attr.comment.empty?
-        hash.merge!( "info"  => dump_markup(attr.comment) )
-      end
-      hash
+      { "name"  => attr.name,
+        "read"  => (attr.rw =~ /R/ ? true : false),
+        "write" => (attr.rw =~ /W/ ? true : false),
+        "info"  => dump_markup(attr.comment),
+      }.tap{ |h|
+        h.delete("read" ) unless h["read" ]
+        h.delete("write") unless h["write"]
+        h.delete("info" ) if h["info"].empty?
+      }
     end
 
 
@@ -245,6 +267,11 @@ module RIDumper
         "details"    => dump_markup( meth.comment ),
         "args"       => split_method_params( meth.params ),
         "visibility" => meth.visibility,
+      }.tap{ |h|
+        h.delete("aliases"   ) if h["aliases"].empty?
+        h.delete("details"   ) if h["details"].empty?
+        h.delete("args"      ) if h["args"   ].empty?
+        h.delete("visibility") if h["visibility"] == "public"
       }
     end
 
