@@ -53,11 +53,11 @@ module Dixi
     end
 
     def dir
-      Dixi.contents_dir.join(@dirname)
+      @dir ||= Dixi.contents_dir.join(@dirname)
     end
 
     def version_dir
-      dir.join(@version.to_s)
+      @version_dir ||= dir.join(@version.to_s)
     end
 
     def filepath

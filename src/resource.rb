@@ -169,7 +169,7 @@ module Dixi
     end
 
     def filepath
-      @filepath || 
+      @filepath ||=
         @project.version_dir.join(*split_id(@id)).mp_append(".yaml")
     end
 
