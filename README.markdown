@@ -50,8 +50,22 @@ FAQ
 
 ### Can I import my existing docs to Dixi?
 
-There will eventually be a companion script to import RI or YARD
-documentation to Dixi. For now, you must copy them to Dixi yourself.
+You can use the included ri2dixi script (in "bin") to convert RI
+documentation to the format used by Dixi. Usage is simple:
+
+  ./bin/ri2dixi -i <input directory> -o <output directory>
+
+The script will scan all RI-formatted YAML files in the input
+directory (and its subdirectories), convert them into Dixi-formatted
+YAML files, and save them to the output directory.
+
+To output them directly into your Dixi instance, set the output
+directory to "contents/<project>/<version>/api/". Or, output them to
+some other directory, then copy them all to Dixi after checking them.
+
+In the future, there might be a script that can generate Dixi docs for
+a project from its source and upload them directly to Dixi. Maybe you
+will be the person to write that script?
 
 ### Can I export docs from Dixi back into my project?
 
