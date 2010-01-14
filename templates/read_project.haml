@@ -1,0 +1,23 @@
+%h1 Project: #{name}
+
+- if has_details
+  %a#details/
+  = details
+
+- if has_version
+  %h2#versions Versions
+  %ul
+    %li<
+      %strong
+        %a(href="#{latest_version[:url]}")
+          #{latest_version[:version]}
+
+    - for ver in old_versions_descending
+      %li<
+        %a(href="#{ver[:url]}") #{ver[:version]}
+
+- if has_api_tree
+  %h2#api Current API (#{latest_version[:version]})
+  = api_tree_html
+
+%a(href="#{url_edit}") Edit this project

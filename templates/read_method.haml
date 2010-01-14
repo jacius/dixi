@@ -1,0 +1,52 @@
+%h1<
+  #{name}
+  - if not_public
+    (#{visibility} #{type})
+  - else
+    (#{type})
+
+- unless has_content
+
+  %p This #{type} does not have any documentation yet.
+
+  %a(href="#{url_edit}") Create this #{type}
+
+- else
+
+  - if has_synopsis
+    %h2#synopsis Synopsis
+    = synopsis
+
+  - if has_aliases
+    %h2#aliases Aliases
+    %ul
+      - for al in aliases
+        %li #{al[:name]}
+
+  - if has_base
+    %h2#base Base #{type}
+    #{base}
+
+  - if has_args
+    %h2#args Args
+    %ol
+      - for arg in args
+        %li
+          %h3<
+            #{arg[:name]}
+            - if arg[:has_default]
+              \= #{arg[:default]}
+
+          - if arg[:has_info]
+            = arg[:info]
+
+          - if arg[:has_type]
+            %p Type: #{arg[:type]}
+
+  - if has_details
+    %h2#details Details
+    = details
+
+  %a(href="#{url_edit}") Edit this #{type}
+  %br
+  %a(href="#{url_edit}") Delete this #{type}

@@ -1,10 +1,9 @@
-<h1>Dixi</h1>
+%h1 Dixi
 
-<p>
+%p
   Welcome to <a href="http://github.com/jacius/dixi">Dixi</a>!
-</p>
 
-<p>
+%p
   Dixi is a wiki app designed for creating and maintaining Ruby
   software documentation (especially library API docs)
   collaboratively. It is powered by
@@ -12,35 +11,31 @@
   <a href="http://www.sinatrarb.com/">Sinatra</a>, and
   <a href="http://git-scm.com/">Git</a>
   (via <a href="http://github.com/mojombo/grit">Grit</a>).
-</p>
 
-<p>
+%p
   Dixi is still in early development (as of December 2009), so don't
   expect anything fancy yet. If you want to help make Dixi the most
   kickass documentation system ever, please email
   <a href="mailto:jacius+dixi at gmail.com">jacius+dixi at gmail.com</a>
   or send a message to
   <a href="http://github.com/jacius">jacius on github</a>.
-</p>
 
-{{#has_projects}}
-  <h2>Projects</h2>
-  This wiki has documentation for the following projects:
+- if has_projects
+  %h2 Projects
+  %p This wiki has documentation for the following projects:
 
-  {{#projects_hashed}}
-    <h3><a href="{{url}}">{{name}}</a></h3>
+  - for project in projects_hashed
+    %h3<
+      %a(href="#{project[:url]}") #{project[:name]}
 
-    {{#has_synopsis}}
-      {{{synopsis}}}
-    {{/has_synopsis}}
+    - if project[:has_synopsis]
+      = project[:synopsis]
 
-    <p>Latest version: <a href="{{latest_url}}">{{latest_version}}</a></p>
+    %p<
+      Latest version:
+      %a(href="#{project[:latest_url]}")<
+        #{project[:latest_version]}
 
-    {{#latest_has_tree}}
-      <h4>API</h4>
-      {{{latest_tree_html}}}
-    {{/latest_has_tree}}
-    
-  {{/projects_hashed}}
-
-{{/has_projects}}
+    - if project[:latest_has_tree]
+      %h4 API
+      = project[:latest_tree_html]
