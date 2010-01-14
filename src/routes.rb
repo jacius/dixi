@@ -56,7 +56,7 @@ module Dixi
 
 
     get '/' do
-      mustache :root
+      Dixi::Views::Root.new.render
     end
 
     
@@ -140,9 +140,9 @@ module Dixi
       @resource = @project
 
       if params.has_key? "edit"
-        mustache @project.template_edit
+        @project.template_edit.render
       else
-        mustache @project.template_read
+        @project.template_read.render
       end
     end
 
@@ -170,7 +170,7 @@ module Dixi
 
     get '/:project/:version/?' do
       @project = Project.new( params[:project], params[:version] )
-      mustache :read_version
+      Dixi::Views::ReadVersion.new( :project => @project ).render
     end
 
 
@@ -180,31 +180,31 @@ module Dixi
 
       # EDIT FORM
       if params.has_key? "edit"
-        mustache @resource.template_edit
+        @resource.template_edit.render
 
       # CREATE FORM
       elsif params.has_key? "create"
-        @parent = @resource
+        ivars = { :parent => @resource }
 
         # Check if submitting this form should overwrite the current
         # resources of the same name (if any). The view will inform
         # the user of the situation.
-        @overwrite = (true if params["overwrite"] =~ /y|yes|true/i)
-        if @overwrite
-          @name    = session[:overwrite_name]    || ""
-          @content = session[:overwrite_content] || ""
-          @existing = @parent.child(@name)
+        ivars[:overwrite] = (true if params["overwrite"] =~ /y|yes|true/i)
+        if ivars[:overwrite]
+          ivars[:name]     = session[:overwrite_name]    || ""
+          ivars[:content]  = session[:overwrite_content] || ""
+          ivars[:existing] = @resource.child( ivars[:name] )
 
           # Clear the session
           session[:overwrite_name] = nil
           session[:overwrite_content] = nil
         end
 
-        mustache @parent.template_create
+        @resource.template_create( ivars ).render
 
       # DELETE FORM
       elsif params.has_key? "delete"
-        mustache @resource.template_delete
+        @resource.template_delete.render
 
       # READ PAGE
       else
@@ -212,7 +212,7 @@ module Dixi
           headers( "Cache-Control" => "private" )
           status 404
         end
-        mustache @resource.template_read
+        @resource.template_read.render
       end
     end
 
