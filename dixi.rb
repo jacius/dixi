@@ -18,7 +18,6 @@
 
 require 'pathname'
 require 'sinatra/base'
-require 'mustache/sinatra'
 
 $LOAD_PATH.unshift Pathname.new(__FILE__).expand_path.dirname.to_s
 
@@ -77,12 +76,6 @@ module Dixi
 
   class App < Sinatra::Base
     use Rack::MethodOverride
-
-    register Mustache::Sinatra
-    set :views, 'templates'
-    set :mustaches, 'views'
-    set :namespace, Dixi
-
     enable :sessions
   end
 

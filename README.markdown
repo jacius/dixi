@@ -84,14 +84,14 @@ You will need:
 
 * Ruby 1.8.6+ or JRuby 1.4+
 * Sinatra 0.94
-* Mustache 0.5.0
+* Haml 2.2.17
 * Grit 2.0.0
 * Kramdown 0.2.0
 * Shotgun 0.4 (optional, for development mode)
 
 So...
 
-    gem install sinatra mustache grit kramdown shotgun
+    gem install sinatra haml grit kramdown shotgun
 
 There is nothing to install for Dixi itself. Just run it.
 
