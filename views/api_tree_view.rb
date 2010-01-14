@@ -28,10 +28,7 @@ module Dixi
       def walk_api_tree( resource, maxdepth )
         return [] if maxdepth <= 0
 
-        children = resource.children
-        return [] if children.empty?
-
-        children_html = children.collect{ |child|
+        children_html = resource.children.collect{ |child|
           unless child.type =~ /method/
             ["<li><a href=\"#{child.url_read}\">#{child.basename}</a>"] +
               [(child.type.empty? ? "" : " (#{child.type})")] +
@@ -40,7 +37,11 @@ module Dixi
           end
         }.flatten.compact
 
-        ["\n<ul>\n"] + children_html + ["</ul>\n"]
+        if children_html.empty?
+          return []
+        else
+          ["\n<ul>\n"] + children_html + ["</ul>\n"]
+        end
       end
 
     end
