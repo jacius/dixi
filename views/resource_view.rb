@@ -19,7 +19,7 @@ module Dixi
   module Views
 
     # Base class for all Resource views.
-    class ResourceView < Mustache
+    class ResourceView < View
 
       def has_content
         @resource.has_content?

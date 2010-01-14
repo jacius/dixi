@@ -15,12 +15,10 @@
 #  
 
 
-require 'views/api_tree_view'
-
 module Dixi
   module Views
 
-    class Root < Mustache
+    class Root < View
       include Dixi::Views::APITreeView
 
       def has_projects

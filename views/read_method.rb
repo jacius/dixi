@@ -15,8 +15,6 @@
 #  
 
 
-require 'views/resource_view.rb'
-
 module Dixi
   module Views
 
@@ -45,10 +43,11 @@ module Dixi
 
 
       def args
-        @resource.args.collect { |arg| arg.mustache_hash }
+        @resource.args.collect { |arg| arg.to_hash }
       end
 
       def has_args
+        p @resource.args
         not @resource.args.empty?
       end
 

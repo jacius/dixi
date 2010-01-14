@@ -36,6 +36,7 @@ module Dixi
   autoload :Helpers,  'src/helpers'
   autoload :Logger,   'src/logger'
   autoload :Utils,    'src/utils'
+  autoload :Views,    'src/views'
 
 
   def self.logger
@@ -49,6 +50,13 @@ module Dixi
   def self.contents_dir
     @contents_dir ||= begin
                         d = main_dir.join("contents")
+                        if d.symlink?; d.readlink else d end
+                      end
+  end
+
+  def self.template_dir
+    @template_dir ||= begin
+                        d = main_dir.join("templates")
                         if d.symlink?; d.readlink else d end
                       end
   end

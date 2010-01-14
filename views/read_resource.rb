@@ -15,8 +15,6 @@
 #  
 
 
-require 'views/resource_view.rb'
-
 module Dixi
   module Views
 

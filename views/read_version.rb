@@ -15,8 +15,6 @@
 #  
 
 
-require 'views/read_project'
-
 module Dixi
   module Views
 

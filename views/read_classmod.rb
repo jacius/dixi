@@ -15,8 +15,6 @@
 #  
 
 
-require 'views/resource_view.rb'
-
 module Dixi
   module Views
 
@@ -32,7 +30,6 @@ module Dixi
 
 
       def has_includes
-        puts @resource.includes.inspect
         not @resource.includes.empty?
       end
 
@@ -148,7 +145,7 @@ module Dixi
       def base
         b = @resource.base
         if b
-          { :base_name => b.name, :base_url => b.url_read }
+          { :name => b.name, :url => b.url_read }
         end
       end
 
