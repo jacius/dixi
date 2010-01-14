@@ -97,8 +97,8 @@ module Dixi
     end
 
 
-    def template_read
-      :read_classmod
+    def template_read( ivars={} )
+      Dixi::Views::ReadClassmod.new( {:resource => self}.merge(ivars) )
     end
 
 

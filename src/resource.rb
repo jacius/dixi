@@ -337,20 +337,20 @@ module Dixi
     # TEMPLATES
     #++
 
-    def template_read
-      :read_resource
+    def template_read( ivars={} )
+      Dixi::Views::ReadResource.new( {:resource => self}.merge(ivars) )
     end
 
-    def template_edit
-      :edit_resource
+    def template_edit( ivars={} )
+      Dixi::Views::EditResource.new( {:resource => self}.merge(ivars) )
     end
 
-    def template_create
-      :create_resource
+    def template_create( ivars={} )
+      Dixi::Views::CreateResource.new( {:resource => self}.merge(ivars) )
     end
 
-    def template_delete
-      :delete_resource
+    def template_delete( ivars={} )
+      Dixi::Views::DeleteResource.new( {:resource => self}.merge(ivars) )
     end
 
 

@@ -65,15 +65,15 @@ module Dixi
     end
 
 
-    def mustache_hash
+    def to_hash
       return {
-        :arg_name => name,
-        :arg_info => info,
-        :arg_has_info => has_info?,
-        :arg_type => type,
-        :arg_has_type => has_type?,
-        :arg_default => default,
-        :arg_has_default => has_default?,
+        :name => name,
+        :info => info,
+        :has_info => has_info?,
+        :type => type,
+        :has_type => has_type?,
+        :default => default,
+        :has_default => has_default?,
       }
     end
 

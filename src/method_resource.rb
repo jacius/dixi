@@ -68,8 +68,8 @@ module Dixi
     end
 
 
-    def template_read
-      :read_method
+    def template_read( ivars={} )
+      Dixi::Views::ReadMethod.new( {:resource => self}.merge(ivars) )
     end
 
   end
