@@ -3,12 +3,12 @@
     Editing #{type}:
   - else
     Creating new resource:
-  %strong #{name}
+  %strong= name
   - if filepath?
     %br
-    %span(style="font-size: 70%;") #{filepath}
+    %span(style="font-size: 70%;")= filepath
 
-%form(method="post" action="#{url_submit}")
+%form{:method => "post", :action => url_submit}
   %input(type="hidden" name="_method" value="put")
   %label(for="type") Type:
   %select(name="type")= type_options
@@ -18,4 +18,4 @@
   %textarea(name="content" cols="80" rows="20")= yaml_content
   %br
   %input(type="submit" value="Save")
-  %a(href="#{url_read}") Cancel
+  %a{:href => url_read} Cancel

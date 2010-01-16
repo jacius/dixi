@@ -26,15 +26,16 @@
 
   - for project in projects_hashed
     %h3<
-      %a(href="#{project[:url]}") #{project[:name]}
+      %a{:href => project[:url]}
+        = project[:name]
 
     - if project[:has_synopsis]
       = project[:synopsis]
 
     %p<
       Latest version:
-      %a(href="#{project[:latest_url]}")<
-        #{project[:latest_version]}
+      %a{:href => project[:latest_url]}
+        = project[:latest_version]
 
     - if project[:latest_has_tree]
       %h4 API

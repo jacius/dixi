@@ -4,7 +4,7 @@
 
   %p This #{type} does not have any documentation yet.
 
-  %a(href="#{url_edit}") Create this #{type}
+  %a{:href => url_edit} Create this #{type}
 
 - else
 
@@ -14,21 +14,21 @@
 
   - if has_base
     %h2#base Base #{type}
-    %a(href="#{base[:url]}") #{base[:name]}
+    %a{:href => base[:url]}= base[:name]
 
   - if has_includes
     %h2#includes Includes (mixin modules)
     %ul
       - for include in includes
         %li<
-          %a(href="#{include[:url]}") #{include[:name]}
+          %a{:href => include[:url]}= include[:name]
 
   - if has_constants
     %h2#constants Constants:
     %ul
       - for constant in constants
         %li
-          %strong #{constant[:name]}
+          %strong= constant[:name]
           - if constant[:has_value]
             \= #{constant[:value]}
           - if constant[:has_info]
@@ -39,14 +39,14 @@
     %ul
       - for cmethod in cmethods
         %li
-          %a(href="#{cmethod[:url]}") #{cmethod[:name]}
+          %a{:href => cmethod[:url]}= cmethod[:name]
 
   - if has_imethods
     %h2#imethods Instance methods
     %ul
       - for imethod in imethods
         %li
-          %a(href="#{imethod[:url]}") #{imethod[:name]}
+          %a{:href => imethod[:url]}= imethod[:name]
 
   - if has_attributes
     %h2#attributes Attributes
@@ -54,7 +54,7 @@
       - for attribute in attributes
         %li
           %p
-            #{attribute[:name]}
+            = attribute[:name]
             - if attribute[:has_rw]
               [#{attribute[:rw]}]
 
@@ -71,8 +71,8 @@
     %h2#details Details
     = details
 
-  %a(href="#{url_edit}") Edit this #{type}
+  %a{:href => url_edit} Edit this #{type}
   %br
-  %a(href="#{url_create}") Create a new resource in this #{type}
+  %a{:href => url_create} Create a new resource in this #{type}
   %br
-  %a(href="#{url_edit}") Delete this #{type}
+  %a{:href => url_edit} Delete this #{type}

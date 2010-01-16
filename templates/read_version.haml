@@ -1,7 +1,7 @@
 %h1
-  %a(href="#{url}") #{name}
+  %a{:href => url} #{name}
   - if has_version
-    #{version}
+    = version
 
 - if has_api_tree
   %h2#api API

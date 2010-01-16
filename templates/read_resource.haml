@@ -3,13 +3,13 @@
 - if not has_content
   %p This resource does not have any content yet.
 
-  %a(href="#{url_edit}") Create this resource
+  %a{:href => url_edit} Create this resource
 
 - else
 
   %h2#content Content
   %pre= content
 
-  %a(href="#{url_edit}") Create this resource
+  %a{:href => url_edit} Create this resource
   %br
-  %a(href="#{url_delete}") Delete this resource
+  %a{:href => url_delete} Delete this resource
